@@ -1136,3 +1136,2133 @@
         /* Page Transitions */
         .page {
             display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Analytics Page Styles */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .analytics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .analytics-card {
+            padding: 1rem;
+            border-radius: 0.375rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .analytics-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .analytics-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-title {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analytics-period {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .analytics-chart {
+            height: 200px;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .line-chart {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        .line-chart-path {
+            stroke: var(--purple-main);
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .line-chart-area {
+            fill: url(#gradient);
+            opacity: 0.2;
+        }
+
+        .line-chart-dot {
+            fill: var(--purple-main);
+            stroke: white;
+            stroke-width: 1;
+        }
+
+        .line-chart-grid {
+            stroke: var(--border-color);
+            stroke-width: 0.5;
+        }
+
+        .line-chart-axis {
+            stroke: var(--border-color);
+            stroke-width: 1;
+        }
+
+        .line-chart-label {
+            font-size: 0.75rem;
+            fill: var(--text-secondary);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .mobile-brand {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .mobile-brand h1 {
+                font-size: 1.25rem;
+                font-weight: bold;
+                background: linear-gradient(to right, var(--purple-light), var(--indigo-light));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+        }
+
+        /* Dark mode toggle */
+        .dark {
+            --primary-bg: #0f0f1a;
+            --secondary-bg: rgba(0, 0, 0, 0.2);
+        }
+
+        .light {
+            --primary-bg: #f8f9fa;
+            --secondary-bg: rgba(255, 255, 255, 0.2);
+            --border-color: rgba(138, 43, 226, 0.2);
+            --text-primary: #1a1a2e;
+            --text-secondary: rgba(76, 29, 149, 0.7);
+            --card-bg: rgba(255, 255, 255, 0.2);
+        }
+
+        .light body {
+            background: linear-gradient(to bottom right, #f8f9fa, #e0e7ff);
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .loader div {
+            position: absolute;
+            top: 33px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: var(--purple-main);
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+        
+        .loader div:nth-child(1) {
+            left: 8px;
+            animation: loader1 0.6s infinite;
+        }
+        
+        .loader div:nth-child(2) {
+            left: 8px;
+            animation: loader2 0.6s infinite;
+        }
+        
+        .loader div:nth-child(3) {
+            left: 32px;
+            animation: loader2 0.6s infinite;
+        }
+        
+        .loader div:nth-child(4) {
+            left: 56px;
+            animation: loader3 0.6s infinite;
+        }
+        
+        @keyframes loader1 {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes loader3 {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+        
+        @keyframes loader2 {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(24px, 0);
+            }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 15, 26, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-text {
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            background: linear-gradient(to right, var(--purple-light), var(--indigo-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Notification System */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
+        }
+
+        .notification {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--purple-main);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transform: translateX(120%);
+            animation: slide-in 0.3s forwards;
+        }
+
+        .notification.success {
+            border-left-color: #10b981;
+        }
+
+        .notification.error {
+            border-left-color: #ef4444;
+        }
+
+        .notification.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .notification.info {
+            border-left-color: var(--purple-main);
+        }
+
+        .notification-icon {
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-message {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            margin-left: 8px;
+        }
+
+        .notification-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--purple-main);
+            border-radius: 0 0 0 8px;
+            animation: progress 5s linear forwards;
+        }
+
+        @keyframes slide-in {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slide-out {
+            to {
+                transform: translateX(120%);
+            }
+        }
+
+        @keyframes progress {
+            to {
+                width: 0%;
+            }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: rgba(26, 26, 46, 0.9);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.75rem;
+            pointer-events: none;
+            border: 1px solid var(--border-color);
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(26, 26, 46, 0.9) transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .animated-bg-shape {
+            position: absolute;
+            background: linear-gradient(45deg, var(--purple-main), var(--indigo-main));
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.05;
+            animation: float-around 25s infinite linear;
+        }
+
+        @keyframes float-around {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(10%, 15%) rotate(90deg);
+            }
+            50% {
+                transform: translate(5%, 5%) rotate(180deg);
+            }
+            75% {
+                transform: translate(-10%, -5%) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body class="dark">
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="animated-bg-shape" style="width: 600px; height: 600px; top: -300px; left: -200px;"></div>
+        <div class="animated-bg-shape" style="width: 500px; height: 500px; bottom: -250px; right: -150px;"></div>
+        <div class="animated-bg-shape" style="width: 300px; height: 300px; top: 40%; right: 10%;"></div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"><div></div><div></div><div></div><div></div></div>
+        <div class="loading-text">Loading Cloud Security...</div>
+    </div>
+
+    <!-- User Management Modal -->
+    <div class="modal-overlay" id="userModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">User Details</div>
+                <button class="modal-close" id="closeUserModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="userModalContent">
+                <!-- Content will be dynamically added -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelUserAction">Cancel</button>
+                <button class="btn btn-primary" id="confirmUserAction">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <i class="fas fa-cloud text-purple-400"></i>
+                    <h1>Cloud Security</h1>
+                </div>
+                <p class="sidebar-brand-subtitle">Security & Management</p>
+            </div>
+            
+            <div class="sidebar-content">
+                <nav class="sidebar-nav">
+                    <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                    <a href="#commands" class="nav-item" data-page="commands">
+                        <i class="fas fa-terminal"></i>
+                        Commands
+                    </a>
+                    <a href="#security" class="nav-item" data-page="security">
+                        <i class="fas fa-shield-alt"></i>
+                        Security
+                    </a>
+                    <a href="#analytics" class="nav-item" data-page="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        Analytics
+                    </a>
+                    <a href="#settings" class="nav-item" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                    <a href="https://cloud-security.gitbook.io/cloud-security-docs" target="_blank" class="nav-item">
+                        <i class="fas fa-file-alt"></i>
+                        Documentation
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="premium-card">
+                    <div class="premium-header">
+                        <i class="fas fa-crown text-yellow-400"></i>
+                        <span class="premium-title">Premium</span>
+                    </div>
+                    <p class="premium-desc">Upgrade to unlock advanced features</p>
+                    <a href="https://sites.google.com/view/cloud-llc/our-products" target="_blank" class="btn btn-primary btn-block">
+                        Upgrade Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <button class="mobile-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <div class="mobile-brand">
+                    <i class="fas fa-cloud text-purple-400"></i>
+                    <h1>Cloud Security</h1>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    <div class="dropdown">
+                        <button class="server-dropdown" id="serverDropdown">
+                            <div class="server-avatar">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="hidden sm:inline">Server</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content" id="dropdownContent">
+                            <a href="#" class="dropdown-item">Discord Developers</a>
+                            <a href="#" class="dropdown-item">Gaming Community</a>
+                            <a href="https://discord.com/oauth2/authorize?client_id=1342380987035680778" target="_blank" class="dropdown-item">Add to Server</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content">
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboard-page">
+                    <div>
+                        <h1 class="page-title">Welcome to Cloud Security</h1>
+                        <p class="page-subtitle">Your all-in-one security and management solution for Discord</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-shield-alt text-purple-400"></i>
+                                    Security
+                                </div>
+                                <div class="card-subtitle">
+                                    Protection status
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="stat-value text-green-400">Active</div>
+                                <p class="stat-desc">All security modules are running</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-outline btn-block" id="viewSecurityBtn">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-chart-line text-purple-400"></i>
+                                    Activity
+                                </div>
+                                <div class="card-subtitle">
+                                    Last 24 hours
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="stat-value">1,248</div>
+                                <p class="stat-desc">Messages processed</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-outline btn-block" id="viewAnalyticsBtn">
+                                    View Analytics
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-comment-alt text-purple-400"></i>
+                                    Commands
+                                </div>
+                                <div class="card-subtitle">
+                                    Usage statistics
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="stat-value">42</div>
+                                <p class="stat-desc">Commands executed today</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-outline btn-block" id="viewCommandsBtn">
+                                    View Commands
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="dashboard-header">
+                                <div class="dashboard-icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                                <div class="dashboard-title">Moderation Actions</div>
+                            </div>
+                            <div class="dashboard-content">
+                                <div class="chart-container" id="moderationChart">
+                                    <!-- Chart will be generated by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="dashboard-header">
+                                <div class="dashboard-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="dashboard-title">Threat Detection</div>
+                            </div>
+                            <div class="dashboard-content">
+                                <div class="dashboard-stat">12</div>
+                                <div class="dashboard-desc">Potential threats detected and blocked</div>
+                                <div class="separator"></div>
+                                <div class="dashboard-desc">
+                                    <i class="fas fa-check-circle text-green-400"></i>
+                                    Anti-raid protection active
+                                </div>
+                                <div class="dashboard-desc">
+                                    <i class="fas fa-check-circle text-green-400"></i>
+                                    Spam detection active
+                                </div>
+                                <div class="dashboard-desc">
+                                    <i class="fas fa-check-circle text-green-400"></i>
+                                    Scam link detection active
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="dashboard-header">
+                                <div class="dashboard-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="dashboard-title">Member Activity</div>
+                            </div>
+                            <div class="dashboard-content">
+                                <div class="dashboard-stat">+15</div>
+                                <div class="dashboard-desc">New members in the last 24 hours</div>
+                                <div class="separator"></div>
+                                <div class="dashboard-desc">
+                                    <i class="fas fa-arrow-up text-green-400"></i>
+                                    5% increase in active users
+                                </div>
+                                <div class="dashboard-desc">
+                                    <i class="fas fa-arrow-down text-red-400"></i>
+                                    2% decrease in message volume
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tabs">
+                        <div class="tabs-list">
+                            <button class="tab-trigger active" data-tab="documentation">Documentation</button>
+                            <button class="tab-trigger" data-tab="setup">Setup Guide</button>
+                            <button class="tab-trigger" data-tab="commands">Commands</button>
+                            <div class="tab-indicator" id="tabIndicator"></div>
+                        </div>
+                        
+                        <div class="tab-content active" id="documentation">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Cloud Security Documentation</div>
+                                    <div class="card-subtitle">
+                                        Everything you need to know about Cloud Security
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="doc-section">
+                                        <h3 class="doc-title">Introduction</h3>
+                                        <p class="doc-text">
+                                            Welcome to Cloud Security – the ultimate protection bot for Discord! Keep your community safe from threats, raids, and malicious activity with our advanced moderation, verification, and security features. Cloud Security ensures a secure and seamless experience for your server, so you can focus on what matters most – building your community.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="doc-section">
+                                        <h3 class="doc-title">Key Features</h3>
+                                        <ul class="feature-list">
+                                            <li class="feature-item">Advanced auto-moderation with customizable rules</li>
+                                            <li class="feature-item">Anti-raid protection with intelligent detection</li>
+                                            <li class="feature-item">Comprehensive logging system for all server activities</li>
+                                            <li class="feature-item">Smart announcer for welcome and leave messages</li>
+                                            <li class="feature-item">Situation analysis for security threats</li>
+                                            <li class="feature-item">Scam detection to protect your community</li>
+                                            <li class="feature-item">Ticket system for support requests</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="doc-actions">
+                                        <a href="https://cloud-security.gitbook.io/cloud-security-docs" target="_blank" class="btn btn-primary">
+                                            <i class="fas fa-external-link-alt"></i>
+                                            Full Documentation
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="setup">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Quick Setup Guide</div>
+                                    <div class="card-subtitle">
+                                        Get Cloud Security up and running in minutes
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="setup-step">
+                                        <h3 class="doc-title">Step 1: Invite the Bot</h3>
+                                        <p class="doc-text">
+                                            Add Cloud Security to your server by clicking the "Add to Server" button and selecting your Discord server.
+                                        </p>
+                                        <a href="https://discord.com/oauth2/authorize?client_id=1342380987035680778" target="_blank" class="btn btn-primary" style="margin-top: 0.5rem;">
+                                            Add to Server
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="separator"></div>
+                                    
+                                    <div class="setup-step">
+                                        <h3 class="doc-title">Step 2: Configure Permissions</h3>
+                                        <p class="doc-text">
+                                            Ensure Cloud Security has the necessary permissions to function properly. We recommend giving it 
+                                            administrator access for full functionality.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="separator"></div>
+                                    
+                                    <div class="setup-step">
+                                        <h3 class="doc-title">Step 3: Basic Configuration</h3>
+                                        <p class="doc-text">
+                                            Use the <code>/setup</code> command to configure basic settings 
+                                            for your server, including moderation levels and logging channels.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="commands">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Command Reference</div>
+                                    <div class="card-subtitle">
+                                        Essential commands to get started
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/help</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Displays a list of available commands and their descriptions.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/setup</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Starts the interactive setup process for configuring Cloud Security.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/security [level]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Sets the security level for your server (low, medium, high, extreme).
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/logs [channel]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Sets the channel where Cloud Security will send log messages.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-card">
+                        <div class="help-content">
+                            <div>
+                                <h2 class="help-title">
+                                    <i class="fas fa-question-circle text-purple-400"></i>
+                                    Need Help?
+                                </h2>
+                                <p class="help-desc">
+                                    Join our support server or check out our documentation for assistance.
+                                </p>
+                            </div>
+                            <div class="help-actions">
+                                <a href="https://discord.gg/DvYx4DRwkz" target="_blank" class="btn btn-primary">
+                                    <i class="fas fa-globe"></i>
+                                    Support Server
+                                </a>
+                                <a href="https://cloud-security.gitbook.io/cloud-security-docs" target="_blank" class="btn btn-outline">
+                                    <i class="fas fa-file-alt"></i>
+                                    Documentation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commands Page -->
+                <div class="page" id="commands-page">
+                    <div>
+                        <h1 class="page-title">Commands</h1>
+                        <p class="page-subtitle">Explore all available commands for Cloud Security</p>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <div class="card-header">
+                            <div class="card-title">Command Categories</div>
+                            <div class="card-subtitle">
+                                Browse commands by category
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="tabs">
+                                <div class="tabs-list">
+                                    <button class="tab-trigger active" data-cmd-tab="moderation">Moderation</button>
+                                    <button class="tab-trigger" data-cmd-tab="security">Security</button>
+                                    <button class="tab-trigger" data-cmd-tab="utility">Utility</button>
+                                    <button class="tab-trigger" data-cmd-tab="config">Configuration</button>
+                                    <div class="tab-indicator" id="cmdTabIndicator"></div>
+                                </div>
+                                
+                                <div class="tab-content active" id="moderation-tab">
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/ban [user] [reason]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Bans a user from the server with an optional reason.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/kick [user] [reason]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Kicks a user from the server with an optional reason.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/mute [user] [duration] [reason]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Temporarily mutes a user for the specified duration.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/warn [user] [reason]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Issues a warning to a user with the specified reason.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/clear [amount]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Deletes the specified number of messages from the current channel.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content" id="security-tab">
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/security [level]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Sets the security level for your server (low, medium, high, extreme).
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/antiraid [on/off]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Enables or disables anti-raid protection for your server.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/antispam [on/off]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Enables or disables anti-spam protection for your server.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/verification [level]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Sets the verification level required for new members.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content" id="utility-tab">
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/help [command]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Displays help information for all commands or a specific command.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/stats</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Shows statistics about your server and Cloud Security's activity.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/ticket [create/close]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Creates or closes a support ticket.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/userinfo [user]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Displays information about a user.
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content" id="config-tab">
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/setup</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Starts the interactive setup process for configuring Cloud Security.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/logs [channel]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Sets the channel where Cloud Security will send log messages.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/welcome [channel] [message]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Sets up welcome messages for new members.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="command-card">
+                                        <div class="command-name">
+                                            <i class="fas fa-terminal text-purple-400"></i>
+                                            <code>/autorole [role]</code>
+                                        </div>
+                                        <p class="command-desc">
+                                            Sets a role to be automatically assigned to new members.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Command Search</div>
+                            <div class="card-subtitle">
+                                Find the command you need quickly
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div style="margin-bottom: 1rem;">
+                                <input type="text" id="commandSearch" placeholder="Search commands..." class="channel-select" style="width: 100%;">
+                            </div>
+                            <div id="searchResults">
+                                <!-- Search results will appear here -->
+                                <p class="text-center text-purple-300/70">Type to search for commands</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Page -->
+                <div class="page" id="security-page">
+                    <div>
+                        <h1 class="page-title">Security Settings</h1>
+                        <p class="page-subtitle">Configure security features to protect your server</p>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 1.5rem;">
+                        <div class="card-header">
+                            <div class="card-title">Security Level</div>
+                            <div class="card-subtitle">
+                                Choose the appropriate security level for your server
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="security-level-card">
+                                <div class="security-level" data-level="low">
+                                    <div class="security-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="security-info">
+                                        <div class="security-title">Low</div>
+                                        <div class="security-desc">Basic protection against common threats. Suitable for small, private servers.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="security-level" data-level="medium">
+                                    <div class="security-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="security-info">
+                                        <div class="security-title">Medium</div>
+                                        <div class="security-desc">Balanced protection with moderate restrictions. Recommended for most servers.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="security-level active" data-level="high">
+                                    <div class="security-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="security-info">
+                                        <div class="security-title">High</div>
+                                        <div class="security-desc">Enhanced protection with stricter moderation. Ideal for larger public servers.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="security-level" data-level="extreme">
+                                    <div class="security-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="security-info">
+                                        <div class="security-title">Extreme</div>
+                                        <div class="security-desc">Maximum protection with very strict moderation. For servers at high risk of raids.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: right;">
+                                <button class="btn btn-primary" id="saveSecurityLevel">
+                                    Save Security Level
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Security Features</div>
+                            <div class="card-subtitle">
+                                Enable or disable specific security features
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="security-features">
+                                <div class="feature-card">
+                                    <div class="feature-header">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-user-shield"></i>
+                                        </div>
+                                        <div class="feature-title">Anti-Raid Protection</div>
+                                    </div>
+                                    <div class="feature-desc">
+                                        Detects and prevents coordinated raids on your server by monitoring join patterns.
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                                        <span class="text-green-400">Enabled</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-card">
+                                    <div class="feature-header">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-comment-slash"></i>
+                                        </div>
+                                        <div class="feature-title">Anti-Spam System</div>
+                                    </div>
+                                    <div class="feature-desc">
+                                        Prevents message spam by limiting the rate at which users can send messages.
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                                        <span class="text-green-400">Enabled</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-card">
+                                    <div class="feature-header">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-link"></i>
+                                        </div>
+                                        <div class="feature-title">Scam Link Detection</div>
+                                    </div>
+                                    <div class="feature-desc">
+                                        Identifies and removes messages containing known scam links or phishing attempts.
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                                        <span class="text-green-400">Enabled</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-card">
+                                    <div class="feature-header">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <div class="feature-title">Verification System</div>
+                                    </div>
+                                    <div class="feature-desc">
+                                        Requires new members to complete a verification process before accessing the server.
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                                        <span class="text-green-400">Enabled</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-card">
+                                    <div class="feature-header">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-filter"></i>
+                                        </div>
+                                        <div class="feature-title">Content Filter</div>
+                                    </div>
+                                    <div class="feature-desc">
+                                        Filters messages containing inappropriate content, profanity, or offensive language.
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                                        <span class="text-green-400">Enabled</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="feature-card">
+                                    <div class="feature-header">
+                                        <div class="feature-icon">
+                                            <i class="fas fa-file-alt"></i>
+                                        </div>
+                                        <div class="feature-title">Logging System</div>
+                                    </div>
+                                    <div class="feature-desc">
+                                        Logs all security events and moderation actions for review and auditing.
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                                        <span class="text-green-400">Enabled</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: right; margin-top: 1rem;">
+                                <button class="btn btn-primary" id="saveSecurityFeatures">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div class="page" id="analytics-page">
+                    <div>
+                        <h1 class="page-title">Analytics Dashboard</h1>
+                        <p class="page-subtitle">Track your server's activity and performance</p>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-header">
+                                <div class="analytics-title">
+                                    <i class="fas fa-users text-purple-400"></i>
+                                    Member Growth
+                                </div>
+                                <div class="analytics-period">Last 30 days</div>
+                            </div>
+                            <div class="analytics-chart" id="memberGrowthChart">
+                                <!-- Chart will be generated by JS -->
+                                <svg width="100%" height="100%" viewBox="0 0 600 200" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.5"/>
+                                            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Grid lines -->
+                                    <line x1="0" y1="40" x2="600" y2="40" class="line-chart-grid"/>
+                                    <line x1="0" y1="80" x2="600" y2="80" class="line-chart-grid"/>
+                                    <line x1="0" y1="120" x2="600" y2="120" class="line-chart-grid"/>
+                                    <line x1="0" y1="160" x2="600" y2="160" class="line-chart-grid"/>
+                                    
+                                    <!-- Chart data -->
+                                    <path d="M0,180 C50,160 100,140 150,130 C200,120 250,100 300,90 C350,80 400,70 450,50 C500,30 550,20 600,10" class="line-chart-path"/>
+                                    <path d="M0,180 C50,160 100,140 150,130 C200,120 250,100 300,90 C350,80 400,70 450,50 C500,30 550,20 600,10 L600,200 L0,200 Z" class="line-chart-area" fill="url(#gradient)"/>
+                                    
+                                    <!-- Data points -->
+                                    <circle cx="0" cy="180" r="4" class="line-chart-dot"/>
+                                    <circle cx="150" cy="130" r="4" class="line-chart-dot"/>
+                                    <circle cx="300" cy="90" r="4" class="line-chart-dot"/>
+                                    <circle cx="450" cy="50" r="4" class="line-chart-dot"/>
+                                    <circle cx="600" cy="10" r="4" class="line-chart-dot"/>
+                                </svg>
+                            </div>
+                            <div class="analytics-summary">
+                                <div class="dashboard-stat">+124</div>
+                                <div class="dashboard-desc">New members this month</div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <div class="analytics-header">
+                                <div class="analytics-title">
+                                    <i class="fas fa-comment-alt text-purple-400"></i>
+                                    Message Activity
+                                </div>
+                                <div class="analytics-period">Last 7 days</div>
+                            </div>
+                            <div class="analytics-chart" id="messageActivityChart">
+                                <!-- Chart will be generated by JS -->
+                                <svg width="100%" height="100%" viewBox="0 0 600 200" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="gradient2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="#6366f1" stop-opacity="0.5"/>
+                                            <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Grid lines -->
+                                    <line x1="0" y1="40" x2="600" y2="40" class="line-chart-grid"/>
+                                    <line x1="0" y1="80" x2="600" y2="80" class="line-chart-grid"/>
+                                    <line x1="0" y1="120" x2="600" y2="120" class="line-chart-grid"/>
+                                    <line x1="0" y1="160" x2="600" y2="160" class="line-chart-grid"/>
+                                    
+                                    <!-- Chart data -->
+                                    <path d="M0,100 C50,120 100,140 150,90 C200,40 250,60 300,80 C350,100 400,120 450,70 C500,20 550,40 600,60" class="line-chart-path" stroke="#6366f1"/>
+                                    <path d="M0,100 C50,120 100,140 150,90 C200,40 250,60 300,80 C350,100 400,120 450,70 C500,20 550,40 600,60 L600,200 L0,200 Z" class="line-chart-area" fill="url(#gradient2)"/>
+                                    
+                                    <!-- Data points -->
+                                    <circle cx="0" cy="100" r="4" class="line-chart-dot" fill="#6366f1"/>
+                                    <circle cx="150" cy="90" r="4" class="line-chart-dot" fill="#6366f1"/>
+                                    <circle cx="300" cy="80" r="4" class="line-chart-dot" fill="#6366f1"/>
+                                    <circle cx="450" cy="70" r="4" class="line-chart-dot" fill="#6366f1"/>
+                                    <circle cx="600" cy="60" r="4" class="line-chart-dot" fill="#6366f1"/>
+                                </svg>
+                            </div>
+                            <div class="analytics-summary">
+                                <div class="dashboard-stat">8,742</div>
+                                <div class="dashboard-desc">Messages sent this week</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-header">
+                                <div class="analytics-title">
+                                    <i class="fas fa-shield-alt text-purple-400"></i>
+                                    Security Events
+                                </div>
+                                <div class="analytics-period">Last 30 days</div>
+                            </div>
+                            <div class="analytics-content">
+                                <div class="security-features" style="grid-template-columns: repeat(2, 1fr);">
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">42</div>
+                                        <div class="dashboard-desc">Spam Messages</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">18</div>
+                                        <div class="dashboard-desc">Raid Attempts</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">7</div>
+                                        <div class="dashboard-desc">Scam Links</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">23</div>
+                                        <div class="dashboard-desc">Filtered Content</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <div class="analytics-header">
+                                <div class="analytics-title">
+                                    <i class="fas fa-user-shield text-purple-400"></i>
+                                    Moderation Actions
+                                </div>
+                                <div class="analytics-period">Last 30 days</div>
+                            </div>
+                            <div class="analytics-content">
+                                <div class="security-features" style="grid-template-columns: repeat(2, 1fr);">
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">15</div>
+                                        <div class="dashboard-desc">Warnings</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">8</div>
+                                        <div class="dashboard-desc">Mutes</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">5</div>
+                                        <div class="dashboard-desc">Kicks</div>
+                                    </div>
+                                    <div style="text-align: center; padding: 1rem;">
+                                        <div class="dashboard-stat">3</div>
+                                        <div class="dashboard-desc">Bans</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 1.5rem;">
+                        <div class="card-header">
+                            <div class="card-title">Premium Analytics</div>
+                            <div class="card-subtitle">
+                                Upgrade to access advanced analytics features
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="help-card" style="margin-bottom: 0;">
+                                <div class="help-content">
+                                    <div>
+                                        <h2 class="help-title">
+                                            <i class="fas fa-crown text-yellow-400"></i>
+                                            Unlock Advanced Analytics
+                                        </h2>
+                                        <p class="help-desc">
+                                            Get detailed insights into your server's activity with premium analytics features.
+                                        </p>
+                                        <ul class="feature-list" style="margin-top: 0.5rem;">
+                                            <li class="feature-item">Channel activity breakdown</li>
+                                            <li class="feature-item">User engagement metrics</li>
+                                            <li class="feature-item">Custom reports and exports</li>
+                                            <li class="feature-item">Real-time activity monitoring</li>
+                                        </ul>
+                                    </div>
+                                    <div class="help-actions">
+                                        <a href="https://sites.google.com/view/cloud-llc/our-products" target="_blank" class="btn btn-primary">
+                                            <i class="fas fa-crown"></i>
+                                            Upgrade to Premium
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page" id="settings-page">
+                    <div>
+                        <h1 class="page-title">Bot Settings</h1>
+                        <p class="page-subtitle">Configure Cloud Security for your server</p>
+                    </div>
+
+                    <div class="settings-section">
+                        <h2 class="settings-title">
+                            <i class="fas fa-cog text-purple-400"></i>
+                            General Settings
+                        </h2>
+                        <div class="settings-grid">
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Bot Prefix</div>
+                                    <div class="setting-desc">The prefix used for text commands (slash commands always work)</div>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="text" value="!" class="channel-select" style="width: 60px;">
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Command Cooldown</div>
+                                    <div class="setting-desc">Time in seconds between command usage</div>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="number" value="3" min="1" max="30" class="channel-select" style="width: 60px;">
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Delete Command Messages</div>
+                                    <div class="setting-desc">Automatically delete command messages after execution</div>
+                                </div>
+                                <div class="setting-control">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Response Method</div>
+                                    <div class="setting-desc">How the bot responds to commands</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="channel-select">
+                                        <option value="public" selected>Public</option>
+                                        <option value="ephemeral">Ephemeral</option>
+                                        <option value="dm">Direct Message</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h2 class="settings-title">
+                            <i class="fas fa-file-alt text-purple-400"></i>
+                            Logging Configuration
+                        </h2>
+                        <div class="settings-grid">
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Moderation Logs</div>
+                                    <div class="setting-desc">Channel for moderation action logs</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="channel-select">
+                                        <option value="none">Select Channel</option>
+                                        <option value="mod-logs" selected>#mod-logs</option>
+                                        <option value="bot-logs">#bot-logs</option>
+                                        <option value="general">#general</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Server Logs</div>
+                                    <div class="setting-desc">Channel for server event logs</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="channel-select">
+                                        <option value="none">Select Channel</option>
+                                        <option value="server-logs" selected>#server-logs</option>
+                                        <option value="bot-logs">#bot-logs</option>
+                                        <option value="general">#general</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Message Logs</div>
+                                    <div class="setting-desc">Channel for message deletion/edit logs</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="channel-select">
+                                        <option value="none">Select Channel</option>
+                                        <option value="message-logs" selected>#message-logs</option>
+                                        <option value="bot-logs">#bot-logs</option>
+                                        <option value="general">#general</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Voice Logs</div>
+                                    <div class="setting-desc">Channel for voice activity logs</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="channel-select">
+                                        <option value="none">Select Channel</option>
+                                        <option value="voice-logs">#voice-logs</option>
+                                        <option value="bot-logs" selected>#bot-logs</option>
+                                        <option value="general">#general</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h2 class="settings-title">
+                            <i class="fas fa-bullhorn text-purple-400"></i>
+                            Welcome & Leave Messages
+                        </h2>
+                        <div class="settings-grid">
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Welcome Channel</div>
+                                    <div class="setting-desc">Channel for welcome messages</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="channel-select">
+                                        <option value="none">Select Channel</option>
+                                        <option value="welcome" selected>#welcome</option>
+                                        <option value="general">#general</option>
+                                        <option value="lobby">#lobby</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card">
+                                <div class="setting-info">
+                                    <div class="setting-name">Leave Channel</div>
+                                    <div class="setting-desc">Channel for leave messages</div>
+                                </div>
+                                <div class="setting-control">
+                                    <select class="channel-select">
+                                        <option value="none">Select Channel</option>
+                                        <option value="welcome" selected>#welcome</option>
+                                        <option value="general">#general</option>
+                                        <option value="lobby">#lobby</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card" style="grid-column: span 2;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Welcome Message</div>
+                                    <div class="setting-desc">Message sent when a new member joins</div>
+                                </div>
+                                <div class="setting-control" style="width: 100%; margin-top: 0.5rem;">
+                                    <textarea class="channel-select" style="width: 100%; height: 80px; resize: vertical;">Welcome {user} to {server}! You are member #{count}. Please read the rules and enjoy your stay!</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="setting-card" style="grid-column: span 2;">
+                                <div class="setting-info">
+                                    <div class="setting-name">Leave Message</div>
+                                    <div class="setting-desc">Message sent when a member leaves</div>
+                                </div>
+                                <div class="setting-control" style="width: 100%; margin-top: 0.5rem;">
+                                    <textarea class="channel-select" style="width: 100%; height: 80px; resize: vertical;">{user} has left the server. We hope to see you again soon!</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: right; margin-top: 1rem; margin-bottom: 2rem;">
+                        <button class="btn btn-primary" id="saveSettings">
+                            Save All Settings
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Create background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3 + 1;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 10;
+                
+                particle.style.left = `${posX}%`;
+                particle.style.bottom = `${posY}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Notification system
+        function showNotification(type, title, message, duration = 5000) {
+            const container = document.getElementById('notificationContainer');
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            let icon = '';
+            switch(type) {
+                case 'success':
+                    icon = '<i class="fas fa-check-circle"></i>';
+                    break;
+                case 'error':
+                    icon = '<i class="fas fa-times-circle"></i>';
+                    break;
+                case 'warning':
+                    icon = '<i class="fas fa-exclamation-triangle"></i>';
+                    break;
+                default:
+                    icon = '<i class="fas fa-info-circle"></i>';
+            }
+            
+            notification.innerHTML = `
+                <div class="notification-icon">${icon}</div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close"><i class="fas fa-times"></i></button>
+                <div class="notification-progress" style="width: 100%;"></div>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Close button functionality
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                notification.style.animation = 'slide-out 0.3s forwards';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            });
+            
+            // Auto close after duration
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.animation = 'slide-out 0.3s forwards';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }
+            }, duration);
+        }
+
+        // Loading animation
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                
+                // Show welcome notification
+                setTimeout(() => {
+                    showNotification('info', 'Welcome to Cloud Security', 'Your dashboard is ready. Explore the features to secure your Discord server.');
+                }, 1000);
+            }, 1500);
+        });
+
+        // Toggle sidebar on mobile
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+        
+        // Toggle dropdown
+        const serverDropdown = document.getElementById('serverDropdown');
+        const dropdownContent = document.getElementById('dropdownContent');
+        
+        serverDropdown.addEventListener('click', () => {
+            dropdownContent.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        window.addEventListener('click', (event) => {
+            if (!event.target.matches('.server-dropdown') && !event.target.closest('.server-dropdown')) {
+                if (dropdownContent.classList.contains('show')) {
+                    dropdownContent.classList.remove('show');
+                }
+            }
+        });
+        
+        // Toggle theme
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let currentTheme = 'dark';
+        
+        themeToggle.addEventListener('click', () => {
+            if (currentTheme === 'dark') {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                currentTheme = 'light';
+                showNotification('info', 'Theme Changed', 'Light mode activated.');
+            } else {
+                body.classList.remove('light');
+                body.classList.add('dark');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                currentTheme = 'dark';
+                showNotification('info', 'Theme Changed', 'Dark mode activated.');
+            }
+        });
+        
+        // Tab switching
+        const tabTriggers = document.querySelectorAll('.tab-trigger');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const tabIndicator = document.getElementById('tabIndicator');
+        
+        function updateTabIndicator(trigger) {
+            if (tabIndicator) {
+                tabIndicator.style.left = trigger.offsetLeft + 'px';
+                tabIndicator.style.width = trigger.offsetWidth + 'px';
+            }
+        }
+        
+        tabTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                // Remove active class from all triggers and contents
+                tabTriggers.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked trigger and corresponding content
+                trigger.classList.add('active');
+                const tabId = trigger.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+                
+                // Update tab indicator position
+                updateTabIndicator(trigger);
+            });
+        });
+        
+        // Initialize tab indicator position
+        if (tabIndicator) {
+            const activeTrigger = document.querySelector('.tab-trigger.active');
+            if (activeTrigger) {
+                updateTabIndicator(activeTrigger);
+            }
+        }
+        
+        // Command tab switching
+        const cmdTabTriggers = document.querySelectorAll('[data-cmd-tab]');
+        const cmdTabContents = document.querySelectorAll('[id$="-tab"]');
+        const cmdTabIndicator = document.getElementById('cmdTabIndicator');
+        
+        function updateCmdTabIndicator(trigger) {
+            if (cmdTabIndicator) {
+                cmdTabIndicator.style.left = trigger.offsetLeft + 'px';
+                cmdTabIndicator.style.width = trigger.offsetWidth + 'px';
+            }
+        }
+        
+        cmdTabTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                // Remove active class from all triggers and contents
+                cmdTabTriggers.forEach(t => t.classList.remove('active'));
+                cmdTabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked trigger and corresponding content
+                trigger.classList.add('active');
+                const tabId = trigger.getAttribute('data-cmd-tab') + '-tab';
+                document.getElementById(tabId).classList.add('active');
+                
+                // Update tab indicator position
+                updateCmdTabIndicator(trigger);
+            });
+        });
+        
+        // Initialize command tab indicator position
+        if (cmdTabIndicator) {
+            const activeCmdTrigger = document.querySelector('[data-cmd-tab].active');
+            if (activeCmdTrigger) {
+                updateCmdTabIndicator(activeCmdTrigger);
+            }
+        }
+        
+        // View Commands button functionality
+        const viewCommandsBtn = document.getElementById('viewCommandsBtn');
+        
+        if (viewCommandsBtn) {
+            viewCommandsBtn.addEventListener('click', () => {
+                // Switch to commands page
+                switchPage('commands');
+                showNotification('success', 'Page Changed', 'Viewing Commands page');
+            });
+        }
+        
+        // View Security button functionality
+        const viewSecurityBtn = document.getElementById('viewSecurityBtn');
+        
+        if (viewSecurityBtn) {
+            viewSecurityBtn.addEventListener('click', () => {
+                // Switch to security page
+                switchPage('security');
+                showNotification('success', 'Page Changed', 'Viewing Security page');
+            });
+        }
+        
+        // View Analytics button functionality
+        const viewAnalyticsBtn = document.getElementById('viewAnalyticsBtn');
+        
+        if (viewAnalyticsBtn) {
+            viewAnalyticsBtn.addEventListener('click', () => {
+                // Switch to analytics page
+                switchPage('analytics');
+                showNotification('success', 'Page Changed', 'Viewing Analytics page');
+            });
+        }
+        
+        // Security level selection
+        const securityLevels = document.querySelectorAll('.security-level');
+        
+        securityLevels.forEach(level => {
+            level.addEventListener('click', () => {
+                // Remove active class from all levels
+                securityLevels.forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked level
+                level.classList.add('active');
+                
+                // Show notification
+                const levelName = level.querySelector('.security-title').textContent;
+                showNotification('info', 'Security Level Changed', `Security level set to ${levelName}. Click Save to apply changes.`);
+            });
+        });
+        
+        // Save buttons functionality
+        const saveButtons = document.querySelectorAll('.btn-primary[id^="save"]');
+        
+        saveButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Show saving animation
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                button.disabled = true;
+                
+                // Simulate saving delay
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-check"></i> Saved!';
+                    
+                    // Show notification
+                    showNotification('success', 'Changes Saved', 'Your settings have been saved successfully.');
+                    
+                    // Reset button after a delay
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                    }, 1500);
+                }, 1000);
+            });
+        });
+        
+        // Navigation items
+        const navItems = document.querySelectorAll('.nav-item[data-page]');
+        const pages = document.querySelectorAll('.page');
+        
+        function switchPage(pageId) {
+            // Remove active class from all nav items and pages
+            navItems.forEach(item => item.classList.remove('active'));
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Add active class to clicked nav item and corresponding page
+            document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
+            document.getElementById(`${pageId}-page`).classList.add('active');
+            
+            // Close sidebar on mobile after navigation
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+            }
+        }
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = item.getAttribute('data-page');
+                switchPage(pageId);
+            });
+        });
+        
+        // Generate moderation chart
+        function generateModerationChart() {
+            const chartContainer = document.getElementById('moderationChart');
+            if (!chartContainer) return;
+            
+            // Clear previous chart
+            chartContainer.innerHTML = '';
+            
+            // Sample data for the chart
+            const data = [15, 8, 12, 5, 3, 7, 10, 6, 9, 4];
+            const labels = ['Warns', 'Mutes', 'Kicks', 'Bans', 'Unbans', 'Clears', 'Locks', 'Unlocks', 'Slowmode', 'Other'];
+            
+            // Find the maximum value for scaling
+            const maxValue = Math.max(...data);
+            
+            // Create bars and labels
+            for (let i = 0; i < data.length; i++) {
+                const barHeight = (data[i] / maxValue) * 100;
+                const barLeft = (i * 10) + '%';
+                
+                // Create bar
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.left = barLeft;
+                bar.style.height = '0';
+                bar.setAttribute('data-height', barHeight + '%');
+                bar.setAttribute('data-value', data[i]);
+                chartContainer.appendChild(bar);
+                
+                // Create label
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.style.left = barLeft;
+                label.textContent = labels[i];
+                chartContainer.appendChild(label);
+            }
+            
+            // Animate bars after a short delay
+            setTimeout(() => {
+                const bars = chartContainer.querySelectorAll('.chart-bar');
+                bars.forEach(bar => {
+                    bar.style.height = bar.getAttribute('data-height');
+                    
+                    // Add tooltip functionality
+                    bar.addEventListener('mouseover', () => {
+                        const value = bar.getAttribute('data-value');
+                        bar.setAttribute('title', value);
+                    });
+                });
+            }, 500);
+        }
+        
+        // Generate chart on page load
+        window.addEventListener('load', generateModerationChart);
+        
+        // Command search functionality
+        const commandSearch = document.getElementById('commandSearch');
+        const searchResults = document.getElementById('searchResults');
+        
+        if (commandSearch) {
+            commandSearch.addEventListener('input', () => {
+                const searchTerm = commandSearch.value.toLowerCase();
+                
+                if (searchTerm.length < 1) {
+                    searchResults.innerHTML = '<p class="text-center text-purple-300/70">Type to search for commands</p>';
+                    return;
+                }
+                
+                // Sample commands for search
+                const commands = [
+                    { name: '/help', desc: 'Displays help information for all commands or a specific command.' },
+                    { name: '/ban', desc: 'Bans a user from the server with an optional reason.' },
+                    { name: '/kick', desc: 'Kicks a user from the server with an optional reason.' },
+                    { name: '/mute', desc: 'Temporarily mutes a user for the specified duration.' },
+                    { name: '/warn', desc: 'Issues a warning to a user with the specified reason.' },
+                    { name: '/clear', desc: 'Deletes the specified number of messages from the current channel.' },
+                    { name: '/security', desc: 'Sets the security level for your server (low, medium, high, extreme).' },
+                    { name: '/antiraid', desc: 'Enables or disables anti-raid protection for your server.' },
+                    { name: '/antispam', desc: 'Enables or disables anti-spam protection for your server.' },
+                    { name: '/verification', desc: 'Sets the verification level required for new members.' },
+                    { name: '/stats', desc: 'Shows statistics about your server and Cloud Security\'s activity.' },
+                    { name: '/ticket', desc: 'Creates or closes a support ticket.' },
+                    { name: '/userinfo', desc: 'Displays information about a user.' },
+                    { name: '/setup', desc: 'Starts the interactive setup process for configuring Cloud Security.' },
+                    { name: '/logs', desc: 'Sets the channel where Cloud Security will send log messages.' },
+                    { name: '/welcome', desc: 'Sets up welcome messages for new members.' },
+                    { name: '/autorole', desc: 'Sets a role to be automatically assigned to new members.' }
+                ];
+                
+                // Filter commands based on search term
+                const filteredCommands = commands.filter(cmd => 
+                    cmd.name.toLowerCase().includes(searchTerm) || 
+                    cmd.desc.toLowerCase().includes(searchTerm)
+                );
+                
+                // Display results
+                if (filteredCommands.length > 0) {
+                    searchResults.innerHTML = '';
+                    filteredCommands.forEach(cmd => {
+                        const cmdCard = document.createElement('div');
+                        cmdCard.className = 'command-card';
+                        cmdCard.innerHTML = `
+                            <div class="command-name">
+                                <i class="fas fa-terminal text-purple-400"></i>
+                                <code>${cmd.name}</code>
+                            </div>
+                            <p class="command-desc">
+                                ${cmd.desc}
+                            </p>
+                        `;
+                        searchResults.appendChild(cmdCard);
+                    });
+                } else {
+                    searchResults.innerHTML = '<p class="text-center text-purple-300/70">No commands found matching your search</p>';
+                }
+            });
+        }
+        
+        // Toggle switches animation
+        const toggleSwitches = document.querySelectorAll('.toggle-switch input');
+        
+        toggleSwitches.forEach(toggle => {
+            toggle.addEventListener('change', () => {
+                const label = toggle.parentElement.previousElementSibling;
+                if (toggle.checked) {
+                    label.textContent = 'Enabled';
+                    label.className = 'text-green-400';
+                    showNotification('success', 'Feature Enabled', 'This feature has been enabled.');
+                } else {
+                    label.textContent = 'Disabled';
+                    label.className = 'text-red-400';
+                    showNotification('warning', 'Feature Disabled', 'This feature has been disabled.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
