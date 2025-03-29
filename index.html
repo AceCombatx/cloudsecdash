@@ -5,83 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Security - Discord Bot Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #0f0f1a;
-            --secondary-bg: rgba(0, 0, 0, 0.2);
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #151528;
+            --bg-tertiary: #1e1e38;
+            --bg-card: rgba(30, 30, 56, 0.7);
+            --bg-hover: rgba(138, 43, 226, 0.1);
+            
+            --accent-purple: #8b5cf6;
+            --accent-purple-light: #a78bfa;
+            --accent-purple-dark: #7c3aed;
+            --accent-indigo: #6366f1;
+            --accent-indigo-light: #818cf8;
+            
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            
             --border-color: rgba(138, 43, 226, 0.2);
             --border-hover: rgba(138, 43, 226, 0.4);
-            --purple-light: #c4b5fd;
-            --purple-main: #8b5cf6;
-            --purple-dark: #6d28d9;
-            --indigo-light: #a5b4fc;
-            --indigo-main: #6366f1;
-            --indigo-dark: #4338ca;
-            --text-primary: #ffffff;
-            --text-secondary: rgba(196, 181, 253, 0.7);
-            --card-bg: rgba(0, 0, 0, 0.2);
-            --sidebar-width: 16rem;
-            --glow-purple: 0 0 15px rgba(138, 43, 226, 0.5);
-            --glow-indigo: 0 0 15px rgba(99, 102, 241, 0.5);
-            --neon-purple: 0 0 5px #8b5cf6, 0 0 20px rgba(138, 43, 226, 0.8);
-            --neon-indigo: 0 0 5px #6366f1, 0 0 20px rgba(99, 102, 241, 0.8);
+            
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-glow: 0 0 15px rgba(138, 43, 226, 0.3);
+            
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            
+            --sidebar-width: 260px;
+            --header-height: 64px;
+        }
+
+        .light-theme {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #e9ecef;
+            --bg-tertiary: #dee2e6;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            
+            --text-primary: #1a1a2e;
+            --text-secondary: rgba(26, 26, 46, 0.7);
+            --text-tertiary: rgba(26, 26, 46, 0.5);
+            
+            --border-color: rgba(138, 43, 226, 0.2);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         body {
-            background: linear-gradient(to bottom right, #0f0f1a, #2e1065);
+            background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
+            line-height: 1.5;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Background particles */
-        .particles {
+        /* Animated Background */
+        .animated-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            pointer-events: none;
+            overflow: hidden;
         }
 
-        .particle {
+        .animated-bg-shape {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: rgba(138, 43, 226, 0.3);
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-indigo));
             border-radius: 50%;
-            animation: float 15s infinite linear;
+            filter: blur(80px);
+            opacity: 0.05;
+            animation: float-around 25s infinite linear;
         }
 
-        @keyframes float {
+        @keyframes float-around {
             0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
+                transform: translate(0, 0) rotate(0deg);
             }
-            10% {
-                opacity: 1;
+            25% {
+                transform: translate(10%, 15%) rotate(90deg);
             }
-            90% {
-                opacity: 1;
+            50% {
+                transform: translate(5%, 5%) rotate(180deg);
+            }
+            75% {
+                transform: translate(-10%, -5%) rotate(270deg);
             }
             100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
+                transform: translate(0, 0) rotate(360deg);
             }
-        }
-
-        .container {
-            display: flex;
-            min-height: 100vh;
         }
 
         /* Scrollbar Styling */
@@ -92,6 +117,7 @@
 
         ::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb {
@@ -103,79 +129,85 @@
             background: rgba(138, 43, 226, 0.6);
         }
 
-        /* Sidebar Styles */
+        /* Layout */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--secondary-bg);
-            backdrop-filter: blur(10px);
+            background-color: var(--bg-secondary);
             border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             position: fixed;
             height: 100vh;
             z-index: 10;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
 
         .sidebar-header {
-            padding: 1rem;
+            padding: 1.5rem;
             border-bottom: 1px solid var(--border-color);
         }
 
         .sidebar-brand {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .sidebar-brand h1 {
-            font-size: 1.25rem;
-            font-weight: bold;
-            background: linear-gradient(to right, var(--purple-light), var(--indigo-light));
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-purple-light), var(--accent-indigo-light));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
         .sidebar-brand-subtitle {
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: var(--text-secondary);
             margin-top: 0.25rem;
         }
 
         .sidebar-content {
             flex: 1;
-            padding: 1rem;
+            padding: 1.5rem;
             overflow-y: auto;
         }
 
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.5rem;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.375rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
             color: var(--text-secondary);
             text-decoration: none;
             transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
+            font-weight: 500;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: rgba(138, 43, 226, 0.2);
+        .nav-item:hover {
+            background-color: var(--bg-hover);
             color: var(--text-primary);
         }
 
         .nav-item.active {
-            background-color: rgba(138, 43, 226, 0.2);
-            color: var(--purple-light);
+            background-color: var(--bg-hover);
+            color: var(--accent-purple-light);
+            position: relative;
         }
 
         .nav-item.active::before {
@@ -185,50 +217,29 @@
             top: 0;
             height: 100%;
             width: 3px;
-            background: linear-gradient(to bottom, var(--purple-main), var(--indigo-main));
-            box-shadow: var(--glow-purple);
+            background: linear-gradient(to bottom, var(--accent-purple), var(--accent-indigo));
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
         }
 
-        .nav-item:hover::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--purple-main), transparent);
-            animation: shimmer 1.5s infinite;
+        .nav-item i {
+            font-size: 1.25rem;
+            width: 1.5rem;
+            text-align: center;
         }
 
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        .sidebar-footer {
-            padding: 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .premium-card {
-            background-color: rgba(109, 40, 217, 0.3);
-            border-radius: 0.375rem;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
+        /* Premium Section */
+        .premium-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(99, 102, 241, 0.2));
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             position: relative;
             overflow: hidden;
+            box-shadow: var(--shadow-glow);
         }
 
-        .premium-card::before {
+        .premium-section::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -255,25 +266,45 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.75rem;
             position: relative;
             z-index: 1;
         }
 
         .premium-title {
-            font-size: 0.875rem;
-            font-weight: 500;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-purple-light);
         }
 
         .premium-desc {
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             position: relative;
             z-index: 1;
         }
 
-        /* Main Content Styles */
+        .premium-features {
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .premium-feature i {
+            color: var(--accent-purple-light);
+        }
+
+        /* Main Content */
         .main-content {
             flex: 1;
             margin-left: var(--sidebar-width);
@@ -282,21 +313,29 @@
         }
 
         .header {
-            height: 4rem;
+            height: var(--header-height);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
+            background-color: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
-            background-color: var(--secondary-bg);
-            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 5;
+            box-shadow: var(--shadow-sm);
+            transition: background-color 0.3s ease;
         }
 
-        .mobile-brand {
-            display: none;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 600;
         }
 
         .header-actions {
@@ -305,7 +344,7 @@
             gap: 1rem;
         }
 
-        .theme-toggle, .server-dropdown {
+        .header-btn {
             background: none;
             border: none;
             color: var(--text-secondary);
@@ -314,38 +353,95 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem;
-            border-radius: 0.375rem;
+            border-radius: var(--radius-md);
             transition: all 0.2s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
-        .theme-toggle:hover, .server-dropdown:hover {
-            background-color: rgba(138, 43, 226, 0.2);
+        .header-btn:hover {
+            background-color: var(--bg-hover);
             color: var(--text-primary);
+        }
+
+        .header-btn i {
+            font-size: 1.25rem;
+        }
+
+        .server-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .server-selector:hover {
+            background-color: var(--bg-hover);
         }
 
         .server-avatar {
             width: 2rem;
             height: 2rem;
             border-radius: 50%;
-            background: linear-gradient(to right, var(--purple-main), var(--indigo-main));
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-indigo));
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--glow-purple);
+            color: white;
+            font-size: 1rem;
         }
 
-        .dropdown-content {
-            display: none;
+        .server-name {
+            font-weight: 500;
+        }
+
+        .server-dropdown {
             position: absolute;
-            right: 1.5rem;
-            top: 3.5rem;
-            background-color: #1a1a2e;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background-color: var(--bg-tertiary);
             border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            min-width: 10rem;
-            z-index: 10;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-radius: var(--radius-md);
+            min-width: 200px;
+            box-shadow: var(--shadow-lg);
+            z-index: 20;
+            display: none;
             animation: fadeIn 0.2s ease;
+        }
+
+        .server-dropdown.show {
+            display: block;
+        }
+
+        .server-dropdown-item {
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .server-dropdown-item:hover {
+            background-color: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .server-dropdown-item.active {
+            color: var(--accent-purple-light);
+        }
+
+        .server-dropdown-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0.5rem 0;
         }
 
         @keyframes fadeIn {
@@ -359,53 +455,32 @@
             }
         }
 
-        .dropdown-item {
-            padding: 0.75rem 1rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            display: block;
-            transition: all 0.2s ease;
-        }
-
-        .dropdown-item:hover {
-            background-color: rgba(138, 43, 226, 0.2);
-            color: var(--text-primary);
-        }
-
-        .show {
-            display: block;
-        }
-
         .content {
-            padding: 1.5rem;
-            max-width: 1400px;
+            padding: 2rem;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
-        .page-title {
-            margin-bottom: 0.5rem;
-            font-size: 1.875rem;
-            font-weight: bold;
-            position: relative;
-            display: inline-block;
+        .page-header {
+            margin-bottom: 2rem;
         }
 
-        .page-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(to right, var(--purple-main), var(--indigo-main));
-            border-radius: 3px;
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .page-subtitle {
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
         }
 
+        /* Dashboard Cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
@@ -419,17 +494,25 @@
             }
         }
 
-        .card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
+        .stat-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
+            padding: 1.5rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
         }
 
-        .card::before {
+        .stat-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -441,52 +524,50 @@
             transition: opacity 0.3s ease;
         }
 
-        .card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .card:hover::before {
+        .stat-card:hover::before {
             opacity: 1;
         }
 
-        .card-header {
-            padding: 1rem 1rem 0.5rem 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card-title {
+        .stat-header {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .stat-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-indigo));
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.25rem;
-            font-weight: 500;
+            color: white;
+            box-shadow: var(--shadow-glow);
         }
 
-        .card-subtitle {
+        .stat-title {
+            font-size: 1.125rem;
+            font-weight: 600;
             color: var(--text-secondary);
+        }
+
+        .stat-subtitle {
             font-size: 0.875rem;
-            margin-top: 0.25rem;
-        }
-
-        .card-content {
-            padding: 0.5rem 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card-footer {
-            padding: 0.5rem 1rem 1rem 1rem;
-            position: relative;
-            z-index: 1;
+            color: var(--text-tertiary);
         }
 
         .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0.25rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--accent-purple-light), var(--accent-indigo-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .stat-desc {
@@ -494,311 +575,239 @@
             color: var(--text-secondary);
         }
 
-        .tabs {
-            margin-bottom: 2rem;
+        .stat-footer {
+            margin-top: 1.5rem;
         }
 
-        .tabs-list {
+        /* Dashboard Sections */
+        .dashboard-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-header {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--accent-purple);
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            border-radius: 0.375rem;
-            background-color: var(--secondary-bg);
-            overflow: hidden;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .tab-trigger {
-            padding: 0.5rem 1rem;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            flex: 1;
-            text-align: center;
-            transition: all 0.2s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tab-trigger.active {
-            color: var(--text-primary);
-        }
-
-        .tab-indicator {
-            position: absolute;
-            height: 100%;
-            background-color: rgba(138, 43, 226, 0.2);
-            border-radius: 0.25rem;
+            padding: 1.5rem;
             transition: all 0.3s ease;
-            z-index: 1;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        .doc-section {
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             margin-bottom: 1rem;
         }
 
-        .doc-title {
+        .card-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-indigo));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .card-title {
             font-size: 1.25rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .doc-text {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
+        .card-content {
+            flex: 1;
         }
 
-        .feature-list {
-            list-style-position: inside;
-            padding-left: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-item {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-        }
-
-        .doc-actions {
+        .card-footer {
+            margin-top: 1.5rem;
             display: flex;
             justify-content: flex-end;
         }
 
-        .setup-step {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .setup-step:last-child {
-            border-bottom: none;
-        }
-
-        .command-card {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 0.75rem;
-            border-radius: 0.375rem;
+        /* Commands Section */
+        .commands-container {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
         }
 
-        .command-card:hover {
+        .commands-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-tertiary);
+            overflow-x: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .commands-tabs::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        .commands-tab {
+            padding: 1rem 1.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+        }
+
+        .commands-tab:hover {
+            color: var(--text-primary);
+            background-color: var(--bg-hover);
+        }
+
+        .commands-tab.active {
+            color: var(--accent-purple-light);
+            border-bottom: 2px solid var(--accent-purple);
+            background-color: var(--bg-hover);
+        }
+
+        .commands-content {
+            padding: 1.5rem;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .commands-group {
+            margin-bottom: 2rem;
+        }
+
+        .commands-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .commands-group-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-purple-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .command-item {
+            display: flex;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .command-item:hover {
             border-color: var(--border-hover);
             transform: translateX(5px);
-            box-shadow: -3px 0 0 var(--purple-main);
+            box-shadow: var(--shadow-md);
         }
 
         .command-name {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: monospace;
-            color: var(--purple-light);
+            flex: 0 0 30%;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--accent-purple-light);
         }
 
         .command-desc {
-            font-size: 0.875rem;
+            flex: 1;
             color: var(--text-secondary);
-            margin-top: 0.25rem;
         }
 
-        .help-card {
-            background: linear-gradient(to right, rgba(109, 40, 217, 0.3), rgba(67, 56, 202, 0.3));
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .help-card::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(138, 43, 226, 0.1), transparent 70%);
-            animation: rotate 15s linear infinite;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .help-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (min-width: 768px) {
-            .help-content {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-        }
-
-        .help-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.25rem;
-            font-weight: bold;
-        }
-
-        .help-desc {
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        .help-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        @media (min-width: 640px) {
-            .help-actions {
-                flex-direction: row;
-            }
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            border: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-
-        .btn:hover::after {
-            animation: ripple 1s ease-out;
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(20, 20);
-                opacity: 0;
-            }
-        }
-
-        .btn-primary {
-            background: linear-gradient(to right, var(--purple-main), var(--indigo-main));
+        .command-premium {
+            margin-left: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-indigo));
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
             color: white;
-            box-shadow: 0 4px 6px -1px rgba(109, 40, 217, 0.3);
         }
 
-        .btn-primary:hover {
-            background: linear-gradient(to right, var(--purple-dark), var(--indigo-dark));
-            box-shadow: 0 4px 6px -1px rgba(109, 40, 217, 0.5), var(--glow-purple);
-            transform: translateY(-2px);
+        .command-search {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-tertiary);
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(138, 43, 226, 0.4);
-            color: var(--text-secondary);
-        }
-
-        .btn-outline:hover {
-            background-color: rgba(138, 43, 226, 0.2);
-            color: var(--text-primary);
-            border-color: var(--purple-main);
-            box-shadow: var(--glow-purple);
-            transform: translateY(-2px);
-        }
-
-        .btn-block {
+        .search-input {
             width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-md);
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s ease;
         }
 
-        .btn-neon {
-            background: transparent;
-            border: 1px solid var(--purple-main);
-            color: var(--purple-light);
-            box-shadow: var(--neon-purple);
-            text-shadow: 0 0 5px var(--purple-light);
+        .search-input:focus {
+            border-color: var(--accent-purple);
+            box-shadow: var(--shadow-glow);
         }
 
-        .btn-neon:hover {
-            background-color: rgba(138, 43, 226, 0.2);
-            box-shadow: var(--neon-purple), 0 0 20px rgba(138, 43, 226, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .separator {
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 1rem 0;
-        }
-
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1.25rem;
-        }
-
-        code {
-            font-family: monospace;
-            background-color: rgba(109, 40, 217, 0.3);
-            padding: 0.125rem 0.25rem;
-            border-radius: 0.25rem;
-        }
-
-        /* Security Page Styles */
+        /* Security Page */
         .security-level-card {
             display: flex;
             flex-direction: column;
@@ -811,8 +820,8 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            border-radius: 0.375rem;
-            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-tertiary);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
             cursor: pointer;
@@ -824,9 +833,9 @@
         }
 
         .security-level.active {
-            border-color: var(--purple-main);
-            background-color: rgba(138, 43, 226, 0.2);
-            box-shadow: var(--glow-purple);
+            border-color: var(--accent-purple);
+            background-color: var(--bg-hover);
+            box-shadow: var(--shadow-glow);
         }
 
         .security-icon {
@@ -836,8 +845,9 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: linear-gradient(to bottom right, var(--purple-main), var(--indigo-main));
-            box-shadow: var(--glow-purple);
+            background: linear-gradient(to bottom right, var(--accent-purple), var(--accent-indigo));
+            box-shadow: var(--shadow-glow);
+            color: white;
         }
 
         .security-info {
@@ -869,8 +879,8 @@
 
         .feature-card {
             padding: 1rem;
-            border-radius: 0.375rem;
-            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-tertiary);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
@@ -878,7 +888,7 @@
         .feature-card:hover {
             border-color: var(--border-hover);
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
         }
 
         .feature-header {
@@ -895,8 +905,9 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: linear-gradient(to bottom right, var(--purple-main), var(--indigo-main));
+            background: linear-gradient(to bottom right, var(--accent-purple), var(--accent-indigo));
             font-size: 0.875rem;
+            color: white;
         }
 
         .feature-title {
@@ -928,7 +939,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: var(--bg-tertiary);
             transition: .4s;
             border-radius: 24px;
             border: 1px solid var(--border-color);
@@ -947,25 +958,95 @@
         }
 
         input:checked + .toggle-slider {
-            background-color: var(--purple-main);
+            background-color: var(--accent-purple);
         }
 
         input:checked + .toggle-slider:before {
             transform: translateX(26px);
         }
 
-        /* Settings Page Styles */
+        /* Analytics Page */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .analytics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .analytics-card {
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .analytics-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .analytics-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .analytics-title i {
+            color: var(--accent-purple);
+        }
+
+        .analytics-period {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+        }
+
+        .analytics-chart {
+            height: 200px;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-summary {
+            margin-top: 1rem;
+        }
+
+        /* Settings Page */
         .settings-section {
             margin-bottom: 2rem;
         }
 
         .settings-title {
             font-size: 1.25rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .settings-title i {
+            color: var(--accent-purple);
         }
 
         .settings-grid {
@@ -982,8 +1063,8 @@
 
         .setting-card {
             padding: 1rem;
-            border-radius: 0.375rem;
-            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-tertiary);
             border: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -994,7 +1075,7 @@
         .setting-card:hover {
             border-color: var(--border-hover);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-md);
         }
 
         .setting-info {
@@ -1019,8 +1100,8 @@
 
         .channel-select {
             padding: 0.375rem 0.75rem;
-            border-radius: 0.25rem;
-            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-secondary);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             outline: none;
@@ -1028,90 +1109,71 @@
         }
 
         .channel-select:focus {
-            border-color: var(--purple-main);
-            box-shadow: var(--glow-purple);
+            border-color: var(--accent-purple);
+            box-shadow: var(--shadow-glow);
         }
 
         .channel-option {
-            background-color: #1a1a2e;
+            background-color: var(--bg-tertiary);
         }
 
-        /* Dashboard Page Styles */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .dashboard-card {
-            padding: 1rem;
-            border-radius: 0.375rem;
-            background-color: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-
-        .dashboard-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .dashboard-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .dashboard-icon {
-            width: 2rem;
-            height: 2rem;
-            display: flex;
+        /* Buttons */
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background: linear-gradient(to bottom right, var(--purple-main), var(--indigo-main));
-            font-size: 0.875rem;
-            box-shadow: var(--glow-purple);
-        }
-
-        .dashboard-title {
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
             font-weight: 500;
-        }
-
-        .dashboard-content {
-            margin-top: 0.5rem;
-        }
-
-        .dashboard-stat {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0.25rem;
-        }
-
-        .dashboard-desc {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
             font-size: 0.875rem;
-            color: var(--text-secondary);
         }
 
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-indigo));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-purple-light);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* Charts */
         .chart-container {
-            height: 200px;
-            margin-top: 1rem;
+            width: 100%;
+            height: 300px;
             position: relative;
         }
 
@@ -1119,127 +1181,133 @@
             position: absolute;
             bottom: 0;
             width: 8%;
-            background: linear-gradient(to top, var(--purple-main), var(--indigo-main));
+            background: linear-gradient(to top, var(--accent-purple), var(--accent-indigo));
             border-radius: 3px 3px 0 0;
             transition: height 1s ease;
         }
 
         .chart-label {
             position: absolute;
-            bottom: -20px;
+            bottom: -25px;
             font-size: 0.75rem;
             color: var(--text-secondary);
             text-align: center;
             width: 8%;
         }
 
-        /* Page Transitions */
-        .page {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* Analytics Page Styles */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .analytics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .analytics-card {
-            padding: 1rem;
-            border-radius: 0.375rem;
-            background-color: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-        }
-
-        .analytics-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .analytics-header {
+        /* Notification System */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 350px;
         }
 
-        .analytics-title {
-            font-weight: 500;
+        .notification {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--accent-purple);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            align-items: flex-start;
+            gap: 12px;
+            transform: translateX(120%);
+            animation: slide-in 0.3s forwards;
         }
 
-        .analytics-period {
-            font-size: 0.75rem;
+        .notification.success {
+            border-left-color: #10b981;
+        }
+
+        .notification.error {
+            border-left-color: #ef4444;
+        }
+
+        .notification.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .notification.info {
+            border-left-color: var(--accent-purple);
+        }
+
+        .notification-icon {
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-message {
+            font-size: 0.875rem;
             color: var(--text-secondary);
         }
 
-        .analytics-chart {
-            height: 200px;
-            position: relative;
-            margin-bottom: 1rem;
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            margin-left: 8px;
         }
 
-        .line-chart {
-            position: relative;
-            height: 100%;
-            width: 100%;
+        .notification-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent-purple);
+            border-radius: 0 0 0 8px;
+            animation: progress 5s linear forwards;
         }
 
-        .line-chart-path {
-            stroke: var(--purple-main);
-            stroke-width: 2;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+        @keyframes slide-in {
+            to {
+                transform: translateX(0);
+            }
         }
 
-        .line-chart-area {
-            fill: url(#gradient);
-            opacity: 0.2;
+        @keyframes slide-out {
+            to {
+                transform: translateX(120%);
+            }
         }
 
-        .line-chart-dot {
-            fill: var(--purple-main);
-            stroke: white;
-            stroke-width: 1;
-        }
-
-        .line-chart-grid {
-            stroke: var(--border-color);
-            stroke-width: 0.5;
-        }
-
-        .line-chart-axis {
-            stroke: var(--border-color);
-            stroke-width: 1;
-        }
-
-        .line-chart-label {
-            font-size: 0.75rem;
-            fill: var(--text-secondary);
+        @keyframes progress {
+            to {
+                width: 0%;
+            }
         }
 
         /* Mobile Styles */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
+                z-index: 20;
             }
 
             .sidebar.open {
@@ -1255,39 +1323,23 @@
                 display: block;
             }
 
-            .mobile-brand {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
+            .header-title {
+                display: none;
             }
 
-            .mobile-brand h1 {
-                font-size: 1.25rem;
-                font-weight: bold;
-                background: linear-gradient(to right, var(--purple-light), var(--indigo-light));
-                -webkit-background-clip: text;
-                background-clip: text;
-                color: transparent;
+            .stats-grid,
+            .cards-grid {
+                grid-template-columns: 1fr;
             }
-        }
 
-        /* Dark mode toggle */
-        .dark {
-            --primary-bg: #0f0f1a;
-            --secondary-bg: rgba(0, 0, 0, 0.2);
-        }
+            .command-item {
+                flex-direction: column;
+            }
 
-        .light {
-            --primary-bg: #f8f9fa;
-            --secondary-bg: rgba(255, 255, 255, 0.2);
-            --border-color: rgba(138, 43, 226, 0.2);
-            --text-primary: #1a1a2e;
-            --text-secondary: rgba(76, 29, 149, 0.7);
-            --card-bg: rgba(255, 255, 255, 0.2);
-        }
-
-        .light body {
-            background: linear-gradient(to bottom right, #f8f9fa, #e0e7ff);
+            .command-name {
+                flex: 0 0 100%;
+                margin-bottom: 0.5rem;
+            }
         }
 
         /* Loading Animation */
@@ -1304,7 +1356,7 @@
             width: 13px;
             height: 13px;
             border-radius: 50%;
-            background: var(--purple-main);
+            background: var(--accent-purple);
             animation-timing-function: cubic-bezier(0, 1, 1, 0);
         }
         
@@ -1371,9 +1423,10 @@
         }
 
         .loading-text {
-            margin-top: 1rem;
-            font-size: 1.25rem;
-            background: linear-gradient(to right, var(--purple-light), var(--indigo-light));
+            margin-top: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(to right, var(--accent-purple-light), var(--accent-indigo-light));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -1384,196 +1437,91 @@
             visibility: hidden;
         }
 
-        /* Notification System */
-        .notification-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 350px;
-        }
-
-        .notification {
-            padding: 15px;
-            border-radius: 8px;
-            background-color: rgba(26, 26, 46, 0.9);
-            backdrop-filter: blur(10px);
-            border-left: 4px solid var(--purple-main);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            transform: translateX(120%);
-            animation: slide-in 0.3s forwards;
-        }
-
-        .notification.success {
-            border-left-color: #10b981;
-        }
-
-        .notification.error {
-            border-left-color: #ef4444;
-        }
-
-        .notification.warning {
-            border-left-color: #f59e0b;
-        }
-
-        .notification.info {
-            border-left-color: var(--purple-main);
-        }
-
-        .notification-icon {
-            font-size: 20px;
-            margin-top: 2px;
-        }
-
-        .notification-content {
-            flex: 1;
-        }
-
-        .notification-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .notification-message {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .notification-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 16px;
-            padding: 0;
-            margin-left: 8px;
-        }
-
-        .notification-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: var(--purple-main);
-            border-radius: 0 0 0 8px;
-            animation: progress 5s linear forwards;
-        }
-
-        @keyframes slide-in {
-            to {
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slide-out {
-            to {
-                transform: translateX(120%);
-            }
-        }
-
-        @keyframes progress {
-            to {
-                width: 0%;
-            }
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 120px;
-            background-color: rgba(26, 26, 46, 0.9);
-            color: var(--text-primary);
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.75rem;
-            pointer-events: none;
-            border: 1px solid var(--border-color);
-        }
-
-        .tooltip .tooltip-text::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: rgba(26, 26, 46, 0.9) transparent transparent transparent;
-        }
-
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        /* Animated Background */
-        .animated-bg {
+        /* Modal */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
         }
 
-        .animated-bg-shape {
-            position: absolute;
-            background: linear-gradient(45deg, var(--purple-main), var(--indigo-main));
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.05;
-            animation: float-around 25s infinite linear;
+        .modal-overlay.show .modal {
+            transform: translateY(0);
         }
 
-        @keyframes float-around {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(10%, 15%) rotate(90deg);
-            }
-            50% {
-                transform: translate(5%, 5%) rotate(180deg);
-            }
-            75% {
-                transform: translate(-10%, -5%) rotate(270deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg);
-            }
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.25rem;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
         }
     </style>
 </head>
-<body class="dark">
+<body>
     <!-- Animated Background -->
     <div class="animated-bg">
         <div class="animated-bg-shape" style="width: 600px; height: 600px; top: -300px; left: -200px;"></div>
         <div class="animated-bg-shape" style="width: 500px; height: 500px; bottom: -250px; right: -150px;"></div>
         <div class="animated-bg-shape" style="width: 300px; height: 300px; top: 40%; right: 10%;"></div>
     </div>
-
-    <!-- Particles -->
-    <div class="particles" id="particles"></div>
 
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
@@ -1584,21 +1532,47 @@
         <div class="loading-text">Loading Cloud Security...</div>
     </div>
 
-    <!-- User Management Modal -->
-    <div class="modal-overlay" id="userModal">
+    <!-- Server Selection Modal -->
+    <div class="modal-overlay" id="serverModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">User Details</div>
-                <button class="modal-close" id="closeUserModal">
+                <div class="modal-title">Select Server</div>
+                <button class="modal-close" id="closeServerModal">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="modal-body" id="userModalContent">
-                <!-- Content will be dynamically added -->
+            <div class="modal-body">
+                <div class="server-list">
+                    <div class="server-dropdown-item active">
+                        <div class="server-avatar">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <span>Discord Developers</span>
+                    </div>
+                    <div class="server-dropdown-item">
+                        <div class="server-avatar">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <span>Gaming Community</span>
+                    </div>
+                    <div class="server-dropdown-item">
+                        <div class="server-avatar">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <span>Coding Hub</span>
+                    </div>
+                    <div class="server-dropdown-divider"></div>
+                    <div class="server-dropdown-item">
+                        <div class="server-avatar">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <span>Add to Server</span>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" id="cancelUserAction">Cancel</button>
-                <button class="btn btn-primary" id="confirmUserAction">Confirm</button>
+                <button class="btn btn-secondary" id="cancelServerSelection">Cancel</button>
+                <button class="btn btn-primary" id="confirmServerSelection">Select</button>
             </div>
         </div>
     </div>
@@ -1608,7 +1582,7 @@
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-brand">
-                    <i class="fas fa-cloud text-purple-400"></i>
+                    <i class="fas fa-cloud"></i>
                     <h1>Cloud Security</h1>
                 </div>
                 <p class="sidebar-brand-subtitle">Security & Management</p>
@@ -1643,17 +1617,31 @@
                 </nav>
             </div>
             
-            <div class="sidebar-footer">
-                <div class="premium-card">
-                    <div class="premium-header">
-                        <i class="fas fa-crown text-yellow-400"></i>
-                        <span class="premium-title">Premium</span>
-                    </div>
-                    <p class="premium-desc">Upgrade to unlock advanced features</p>
-                    <a href="https://sites.google.com/view/cloud-llc/our-products" target="_blank" class="btn btn-primary btn-block">
-                        Upgrade Now
-                    </a>
+            <!-- Premium Section - Made more prominent -->
+            <div class="premium-section">
+                <div class="premium-header">
+                    <i class="fas fa-crown" style="color: gold;"></i>
+                    <span class="premium-title">Premium</span>
                 </div>
+                <p class="premium-desc">Unlock advanced features to enhance your server security</p>
+                <div class="premium-features">
+                    <div class="premium-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>File scanning for malware</span>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Advanced analytics & reports</span>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Priority support & updates</span>
+                    </div>
+                </div>
+                <a href="https://sites.google.com/view/cloud-llc/our-products" target="_blank" class="btn btn-primary btn-block">
+                    <i class="fas fa-rocket"></i>
+                    Upgrade Now
+                </a>
             </div>
         </div>
 
@@ -1661,33 +1649,24 @@
         <div class="main-content">
             <!-- Header -->
             <header class="header">
-                <button class="mobile-toggle" id="sidebarToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <div class="mobile-brand">
-                    <i class="fas fa-cloud text-purple-400"></i>
-                    <h1>Cloud Security</h1>
+                <div class="header-left">
+                    <button class="mobile-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="header-title">Dashboard</h1>
                 </div>
                 
                 <div class="header-actions">
-                    <button class="theme-toggle" id="themeToggle">
+                    <button class="header-btn" id="themeToggle">
                         <i class="fas fa-moon"></i>
                     </button>
                     
-                    <div class="dropdown">
-                        <button class="server-dropdown" id="serverDropdown">
-                            <div class="server-avatar">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <span class="hidden sm:inline">Server</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-content" id="dropdownContent">
-                            <a href="#" class="dropdown-item">Discord Developers</a>
-                            <a href="#" class="dropdown-item">Gaming Community</a>
-                            <a href="https://discord.com/oauth2/authorize?client_id=1342380987035680778" target="_blank" class="dropdown-item">Add to Server</a>
+                    <div class="server-selector" id="serverSelector">
+                        <div class="server-avatar">
+                            <i class="fas fa-users"></i>
                         </div>
+                        <span class="server-name">Discord Developers</span>
+                        <i class="fas fa-chevron-down"></i>
                     </div>
                 </div>
             </header>
@@ -1696,534 +1675,374 @@
             <main class="content">
                 <!-- Dashboard Page -->
                 <div class="page active" id="dashboard-page">
-                    <div>
+                    <div class="page-header">
                         <h1 class="page-title">Welcome to Cloud Security</h1>
                         <p class="page-subtitle">Your all-in-one security and management solution for Discord</p>
                     </div>
 
                     <div class="stats-grid">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <i class="fas fa-shield-alt text-purple-400"></i>
-                                    Security
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shield-alt"></i>
                                 </div>
-                                <div class="card-subtitle">
-                                    Protection status
+                                <div>
+                                    <div class="stat-title">Security</div>
+                                    <div class="stat-subtitle">Protection status</div>
                                 </div>
                             </div>
-                            <div class="card-content">
-                                <div class="stat-value text-green-400">Active</div>
-                                <p class="stat-desc">All security modules are running</p>
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-outline btn-block" id="viewSecurityBtn">
+                            <div class="stat-value">Active</div>
+                            <p class="stat-desc">All security modules are running</p>
+                            <div class="stat-footer">
+                                <button class="btn btn-secondary" id="viewSecurityBtn">
                                     View Details
                                 </button>
                             </div>
                         </div>
 
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <i class="fas fa-chart-line text-purple-400"></i>
-                                    Activity
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
                                 </div>
-                                <div class="card-subtitle">
-                                    Last 24 hours
+                                <div>
+                                    <div class="stat-title">Activity</div>
+                                    <div class="stat-subtitle">Last 24 hours</div>
                                 </div>
                             </div>
-                            <div class="card-content">
-                                <div class="stat-value">1,248</div>
-                                <p class="stat-desc">Messages processed</p>
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-outline btn-block" id="viewAnalyticsBtn">
+                            <div class="stat-value">1,248</div>
+                            <p class="stat-desc">Messages processed</p>
+                            <div class="stat-footer">
+                                <button class="btn btn-secondary" id="viewAnalyticsBtn">
                                     View Analytics
                                 </button>
                             </div>
                         </div>
 
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <i class="fas fa-comment-alt text-purple-400"></i>
-                                    Commands
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-terminal"></i>
                                 </div>
-                                <div class="card-subtitle">
-                                    Usage statistics
+                                <div>
+                                    <div class="stat-title">Commands</div>
+                                    <div class="stat-subtitle">Usage statistics</div>
                                 </div>
                             </div>
-                            <div class="card-content">
-                                <div class="stat-value">42</div>
-                                <p class="stat-desc">Commands executed today</p>
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-outline btn-block" id="viewCommandsBtn">
+                            <div class="stat-value">42</div>
+                            <p class="stat-desc">Commands executed today</p>
+                            <div class="stat-footer">
+                                <button class="btn btn-secondary" id="viewCommandsBtn">
                                     View Commands
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="dashboard-grid">
-                        <div class="dashboard-card">
-                            <div class="dashboard-header">
-                                <div class="dashboard-icon">
-                                    <i class="fas fa-user-shield"></i>
-                                </div>
-                                <div class="dashboard-title">Moderation Actions</div>
-                            </div>
-                            <div class="dashboard-content">
-                                <div class="chart-container" id="moderationChart">
-                                    <!-- Chart will be generated by JS -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dashboard-card">
-                            <div class="dashboard-header">
-                                <div class="dashboard-icon">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                </div>
-                                <div class="dashboard-title">Threat Detection</div>
-                            </div>
-                            <div class="dashboard-content">
-                                <div class="dashboard-stat">12</div>
-                                <div class="dashboard-desc">Potential threats detected and blocked</div>
-                                <div class="separator"></div>
-                                <div class="dashboard-desc">
-                                    <i class="fas fa-check-circle text-green-400"></i>
-                                    Anti-raid protection active
-                                </div>
-                                <div class="dashboard-desc">
-                                    <i class="fas fa-check-circle text-green-400"></i>
-                                    Spam detection active
-                                </div>
-                                <div class="dashboard-desc">
-                                    <i class="fas fa-check-circle text-green-400"></i>
-                                    Scam link detection active
-                                </div>
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-user-shield"></i>
+                                Moderation Actions
+                            </h2>
+                            <div class="section-actions">
+                                <button class="btn btn-secondary btn-sm" id="filterChartBtn">
+                                    <i class="fas fa-filter"></i>
+                                    Filter
+                                </button>
+                                <button class="btn btn-secondary btn-sm" id="exportChartBtn">
+                                    <i class="fas fa-download"></i>
+                                    Export
+                                </button>
                             </div>
                         </div>
-
-                        <div class="dashboard-card">
-                            <div class="dashboard-header">
-                                <div class="dashboard-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <div class="dashboard-title">Member Activity</div>
-                            </div>
-                            <div class="dashboard-content">
-                                <div class="dashboard-stat">+15</div>
-                                <div class="dashboard-desc">New members in the last 24 hours</div>
-                                <div class="separator"></div>
-                                <div class="dashboard-desc">
-                                    <i class="fas fa-arrow-up text-green-400"></i>
-                                    5% increase in active users
-                                </div>
-                                <div class="dashboard-desc">
-                                    <i class="fas fa-arrow-down text-red-400"></i>
-                                    2% decrease in message volume
-                                </div>
+                        <div class="card">
+                            <div class="chart-container" id="moderationChart">
+                                <!-- Chart will be generated by JS -->
                             </div>
                         </div>
                     </div>
 
-                    <div class="tabs">
-                        <div class="tabs-list">
-                            <button class="tab-trigger active" data-tab="documentation">Documentation</button>
-                            <button class="tab-trigger" data-tab="setup">Setup Guide</button>
-                            <button class="tab-trigger" data-tab="commands">Commands</button>
-                            <div class="tab-indicator" id="tabIndicator"></div>
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Security Overview
+                            </h2>
                         </div>
-                        
-                        <div class="tab-content active" id="documentation">
+                        <div class="cards-grid">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Cloud Security Documentation</div>
-                                    <div class="card-subtitle">
-                                        Everything you need to know about Cloud Security
+                                    <div class="card-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
                                     </div>
+                                    <div class="card-title">Threat Detection</div>
                                 </div>
                                 <div class="card-content">
-                                    <div class="doc-section">
-                                        <h3 class="doc-title">Introduction</h3>
-                                        <p class="doc-text">
-                                            Welcome to Cloud Security – the ultimate protection bot for Discord! Keep your community safe from threats, raids, and malicious activity with our advanced moderation, verification, and security features. Cloud Security ensures a secure and seamless experience for your server, so you can focus on what matters most – building your community.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="doc-section">
-                                        <h3 class="doc-title">Key Features</h3>
-                                        <ul class="feature-list">
-                                            <li class="feature-item">Advanced auto-moderation with customizable rules</li>
-                                            <li class="feature-item">Anti-raid protection with intelligent detection</li>
-                                            <li class="feature-item">Comprehensive logging system for all server activities</li>
-                                            <li class="feature-item">Smart announcer for welcome and leave messages</li>
-                                            <li class="feature-item">Situation analysis for security threats</li>
-                                            <li class="feature-item">Scam detection to protect your community</li>
-                                            <li class="feature-item">Ticket system for support requests</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div class="doc-actions">
-                                        <a href="https://cloud-security.gitbook.io/cloud-security-docs" target="_blank" class="btn btn-primary">
-                                            <i class="fas fa-external-link-alt"></i>
-                                            Full Documentation
-                                        </a>
+                                    <div class="stat-value" style="font-size: 2rem;">12</div>
+                                    <p class="stat-desc">Potential threats detected and blocked</p>
+                                    <div style="margin-top: 1rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                            <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                                            <span>Anti-raid protection active</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                            <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                                            <span>Spam detection active</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                                            <span>Scam link detection active</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="tab-content" id="setup">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Quick Setup Guide</div>
-                                    <div class="card-subtitle">
-                                        Get Cloud Security up and running in minutes
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <div class="setup-step">
-                                        <h3 class="doc-title">Step 1: Invite the Bot</h3>
-                                        <p class="doc-text">
-                                            Add Cloud Security to your server by clicking the "Add to Server" button and selecting your Discord server.
-                                        </p>
-                                        <a href="https://discord.com/oauth2/authorize?client_id=1342380987035680778" target="_blank" class="btn btn-primary" style="margin-top: 0.5rem;">
-                                            Add to Server
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="separator"></div>
-                                    
-                                    <div class="setup-step">
-                                        <h3 class="doc-title">Step 2: Configure Permissions</h3>
-                                        <p class="doc-text">
-                                            Ensure Cloud Security has the necessary permissions to function properly. We recommend giving it 
-                                            administrator access for full functionality.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="separator"></div>
-                                    
-                                    <div class="setup-step">
-                                        <h3 class="doc-title">Step 3: Basic Configuration</h3>
-                                        <p class="doc-text">
-                                            Use the <code>/setup</code> command to configure basic settings 
-                                            for your server, including moderation levels and logging channels.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="tab-content" id="commands">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="card-title">Command Reference</div>
-                                    <div class="card-subtitle">
-                                        Essential commands to get started
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/help</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Displays a list of available commands and their descriptions.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/setup</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Starts the interactive setup process for configuring Cloud Security.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/security [level]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Sets the security level for your server (low, medium, high, extreme).
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/logs [channel]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Sets the channel where Cloud Security will send log messages.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="help-card">
-                        <div class="help-content">
-                            <div>
-                                <h2 class="help-title">
-                                    <i class="fas fa-question-circle text-purple-400"></i>
-                                    Need Help?
-                                </h2>
-                                <p class="help-desc">
-                                    Join our support server or check out our documentation for assistance.
-                                </p>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="card-title">Member Activity</div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="stat-value" style="font-size: 2rem;">+15</div>
+                                    <p class="stat-desc">New members in the last 24 hours</p>
+                                    <div style="margin-top: 1rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                            <i class="fas fa-arrow-up" style="color: #10b981;"></i>
+                                            <span>5% increase in active users</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <i class="fas fa-arrow-down" style="color: #ef4444;"></i>
+                                            <span>2% decrease in message volume</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="help-actions">
-                                <a href="https://discord.gg/DvYx4DRwkz" target="_blank" class="btn btn-primary">
-                                    <i class="fas fa-globe"></i>
-                                    Support Server
-                                </a>
-                                <a href="https://cloud-security.gitbook.io/cloud-security-docs" target="_blank" class="btn btn-outline">
-                                    <i class="fas fa-file-alt"></i>
-                                    Documentation
-                                </a>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-icon">
+                                        <i class="fas fa-cog"></i>
+                                    </div>
+                                    <div class="card-title">Quick Actions</div>
+                                </div>
+                                <div class="card-content">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                        <button class="btn btn-secondary" id="scanServerBtn">
+                                            <i class="fas fa-shield-alt"></i>
+                                            Security Scan
+                                        </button>
+                                        <button class="btn btn-secondary" id="verifyUsersBtn">
+                                            <i class="fas fa-user-shield"></i>
+                                            Verify Users
+                                        </button>
+                                        <button class="btn btn-secondary" id="lockdownBtn">
+                                            <i class="fas fa-lock"></i>
+                                            Lockdown
+                                        </button>
+                                        <button class="btn btn-secondary" id="quickSettingsBtn">
+                                            <i class="fas fa-cog"></i>
+                                            Settings
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Commands Page -->
-                <div class="page" id="commands-page">
-                    <div>
+                <div class="page" id="commands-page" style="display: none;">
+                    <div class="page-header">
                         <h1 class="page-title">Commands</h1>
                         <p class="page-subtitle">Explore all available commands for Cloud Security</p>
                     </div>
 
-                    <div class="card" style="margin-bottom: 1.5rem;">
-                        <div class="card-header">
-                            <div class="card-title">Command Categories</div>
-                            <div class="card-subtitle">
-                                Browse commands by category
-                            </div>
+                    <div class="commands-container">
+                        <div class="command-search">
+                            <input type="text" id="commandSearch" placeholder="Search commands..." class="search-input">
                         </div>
-                        <div class="card-content">
-                            <div class="tabs">
-                                <div class="tabs-list">
-                                    <button class="tab-trigger active" data-cmd-tab="moderation">Moderation</button>
-                                    <button class="tab-trigger" data-cmd-tab="security">Security</button>
-                                    <button class="tab-trigger" data-cmd-tab="utility">Utility</button>
-                                    <button class="tab-trigger" data-cmd-tab="config">Configuration</button>
-                                    <div class="tab-indicator" id="cmdTabIndicator"></div>
+                        <div class="commands-tabs">
+                            <div class="commands-tab active" data-tab="moderation">Moderation</div>
+                            <div class="commands-tab" data-tab="security">Security</div>
+                            <div class="commands-tab" data-tab="utility">Utility</div>
+                            <div class="commands-tab" data-tab="config">Configuration</div>
+                            <div class="commands-tab" data-tab="premium">Premium</div>
+                            <div class="commands-tab" data-tab="all">All Commands</div>
+                        </div>
+                        <div class="commands-content">
+                            <div class="commands-group">
+                                <h3 class="commands-group-title">
+                                    <i class="fas fa-user-shield"></i>
+                                    Moderation Commands
+                                </h3>
+                                <div class="command-item">
+                                    <div class="command-name">ban</div>
+                                    <div class="command-desc">Request to ban a user.</div>
                                 </div>
-                                
-                                <div class="tab-content active" id="moderation-tab">
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/ban [user] [reason]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Bans a user from the server with an optional reason.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/kick [user] [reason]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Kicks a user from the server with an optional reason.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/mute [user] [duration] [reason]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Temporarily mutes a user for the specified duration.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/warn [user] [reason]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Issues a warning to a user with the specified reason.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/clear [amount]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Deletes the specified number of messages from the current channel.
-                                        </p>
-                                    </div>
+                                <div class="command-item">
+                                    <div class="command-name">kick</div>
+                                    <div class="command-desc">Request to kick a user.</div>
                                 </div>
-                                
-                                <div class="tab-content" id="security-tab">
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/security [level]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Sets the security level for your server (low, medium, high, extreme).
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/antiraid [on/off]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Enables or disables anti-raid protection for your server.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/antispam [on/off]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Enables or disables anti-spam protection for your server.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/verification [level]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Sets the verification level required for new members.
-                                        </p>
-                                    </div>
+                                <div class="command-item">
+                                    <div class="command-name">mute</div>
+                                    <div class="command-desc">Mute a user for a specified duration.</div>
                                 </div>
-                                
-                                <div class="tab-content" id="utility-tab">
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/help [command]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Displays help information for all commands or a specific command.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/stats</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Shows statistics about your server and Cloud Security's activity.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/ticket [create/close]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Creates or closes a support ticket.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/userinfo [user]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Displays information about a user.
-                                        </p>
-                                    </div>
+                                <div class="command-item">
+                                    <div class="command-name">warn</div>
+                                    <div class="command-desc">Warn a user.</div>
                                 </div>
-                                
-                                <div class="tab-content" id="config-tab">
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/setup</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Starts the interactive setup process for configuring Cloud Security.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/logs [channel]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Sets the channel where Cloud Security will send log messages.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/welcome [channel] [message]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Sets up welcome messages for new members.
-                                        </p>
-                                    </div>
-                                    
-                                    <div class="command-card">
-                                        <div class="command-name">
-                                            <i class="fas fa-terminal text-purple-400"></i>
-                                            <code>/autorole [role]</code>
-                                        </div>
-                                        <p class="command-desc">
-                                            Sets a role to be automatically assigned to new members.
-                                        </p>
-                                    </div>
+                                <div class="command-item">
+                                    <div class="command-name">warnremove</div>
+                                    <div class="command-desc">Remove a user's warning.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">warnview</div>
+                                    <div class="command-desc">View all warnings for a user.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">purge</div>
+                                    <div class="command-desc">Purge a number of messages from the channel.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">lock</div>
+                                    <div class="command-desc">Locks a channel, preventing members from sending messages.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">unlock</div>
+                                    <div class="command-desc">Unlocks a channel, allowing members to send messages again.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">slowmode</div>
+                                    <div class="command-desc">Set slowmode in the channel.</div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Command Search</div>
-                            <div class="card-subtitle">
-                                Find the command you need quickly
+                            <div class="commands-group">
+                                <h3 class="commands-group-title">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Security Commands
+                                </h3>
+                                <div class="command-item">
+                                    <div class="command-name">scan</div>
+                                    <div class="command-desc">Scan your server for security risks and fix them automatically.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">toggle_automod</div>
+                                    <div class="command-desc">Enable or disable AutoMod for this server.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">toggle_scam_detection</div>
+                                    <div class="command-desc">Enable or disable scam detection for this server.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">urlscan</div>
+                                    <div class="command-desc">Scan a URL for viruses, phishing, and scams.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">blacklist</div>
+                                    <div class="command-desc">Blacklist a user (ID), link, or word with a reason.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">unblacklist</div>
+                                    <div class="command-desc">Remove a user, link, or word from the blacklist.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">viewblacklist</div>
+                                    <div class="command-desc">View the current blacklist with reasons.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">situation</div>
+                                    <div class="command-desc">Analyze a server situation and get a verdict on actions or punishment.</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-content">
-                            <div style="margin-bottom: 1rem;">
-                                <input type="text" id="commandSearch" placeholder="Search commands..." class="channel-select" style="width: 100%;">
+
+                            <div class="commands-group">
+                                <h3 class="commands-group-title">
+                                    <i class="fas fa-tools"></i>
+                                    Utility Commands
+                                </h3>
+                                <div class="command-item">
+                                    <div class="command-name">help</div>
+                                    <div class="command-desc">Displays a list of available commands and features.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">botinfo</div>
+                                    <div class="command-desc">Displays information about the bot.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">generatepassword</div>
+                                    <div class="command-desc">Generate a secure random password.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">storepassword</div>
+                                    <div class="command-desc">Store a password securely.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">getpasswords</div>
+                                    <div class="command-desc">Retrieve all stored passwords with pagination.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">convert</div>
+                                    <div class="command-desc">Convert a Unix timestamp to a readable date/time.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">timestamp</div>
+                                    <div class="command-desc">Generate a Discord timestamp with time zone support.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">say</div>
+                                    <div class="command-desc">Make the bot say something.</div>
+                                </div>
                             </div>
-                            <div id="searchResults">
-                                <!-- Search results will appear here -->
-                                <p class="text-center text-purple-300/70">Type to search for commands</p>
+
+                            <div class="commands-group">
+                                <h3 class="commands-group-title">
+                                    <i class="fas fa-crown" style="color: gold;"></i>
+                                    Premium Commands
+                                </h3>
+                                <div class="command-item">
+                                    <div class="command-name">filescan</div>
+                                    <div class="command-desc">Scan an uploaded file for malware.</div>
+                                    <span class="command-premium">Premium</span>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">premium</div>
+                                    <div class="command-desc">Check if this server has premium access.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">premiumlist</div>
+                                    <div class="command-desc">View all premium servers.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">premiumsubmit</div>
+                                    <div class="command-desc">Request premium access for your server.</div>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">checkcode</div>
+                                    <div class="command-desc">Check code for errors and security risks with AI suggestions.</div>
+                                    <span class="command-premium">Premium</span>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">upgrade</div>
+                                    <div class="command-desc">Upgrade a message with AI. Provide the message and the prompt for the upgrade.</div>
+                                    <span class="command-premium">Premium</span>
+                                </div>
+                                <div class="command-item">
+                                    <div class="command-name">announce</div>
+                                    <div class="command-desc">Use AI to improve an announcement before posting.</div>
+                                    <span class="command-premium">Premium</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Security Page -->
-                <div class="page" id="security-page">
-                    <div>
+                <div class="page" id="security-page" style="display: none;">
+                    <div class="page-header">
                         <h1 class="page-title">Security Settings</h1>
                         <p class="page-subtitle">Configure security features to protect your server</p>
                     </div>
@@ -2308,7 +2127,7 @@
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
                                         <span class="text-green-400">Enabled</span>
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" checked class="feature-toggle" data-feature="antiraid">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -2327,7 +2146,7 @@
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
                                         <span class="text-green-400">Enabled</span>
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" checked class="feature-toggle" data-feature="antispam">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -2346,7 +2165,7 @@
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
                                         <span class="text-green-400">Enabled</span>
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" checked class="feature-toggle" data-feature="scamdetection">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -2365,7 +2184,7 @@
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
                                         <span class="text-green-400">Enabled</span>
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" checked class="feature-toggle" data-feature="verification">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -2384,7 +2203,7 @@
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
                                         <span class="text-green-400">Enabled</span>
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" checked class="feature-toggle" data-feature="contentfilter">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -2403,7 +2222,7 @@
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
                                         <span class="text-green-400">Enabled</span>
                                         <label class="toggle-switch">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" checked class="feature-toggle" data-feature="logging">
                                             <span class="toggle-slider"></span>
                                         </label>
                                     </div>
@@ -2420,8 +2239,8 @@
                 </div>
 
                 <!-- Analytics Page -->
-                <div class="page" id="analytics-page">
-                    <div>
+                <div class="page" id="analytics-page" style="display: none;">
+                    <div class="page-header">
                         <h1 class="page-title">Analytics Dashboard</h1>
                         <p class="page-subtitle">Track your server's activity and performance</p>
                     </div>
@@ -2430,7 +2249,7 @@
                         <div class="analytics-card">
                             <div class="analytics-header">
                                 <div class="analytics-title">
-                                    <i class="fas fa-users text-purple-400"></i>
+                                    <i class="fas fa-users"></i>
                                     Member Growth
                                 </div>
                                 <div class="analytics-period">Last 30 days</div>
@@ -2463,15 +2282,15 @@
                                 </svg>
                             </div>
                             <div class="analytics-summary">
-                                <div class="dashboard-stat">+124</div>
-                                <div class="dashboard-desc">New members this month</div>
+                                <div class="stat-value" style="font-size: 1.75rem;">+124</div>
+                                <div class="stat-desc">New members this month</div>
                             </div>
                         </div>
 
                         <div class="analytics-card">
                             <div class="analytics-header">
                                 <div class="analytics-title">
-                                    <i class="fas fa-comment-alt text-purple-400"></i>
+                                    <i class="fas fa-comment-alt"></i>
                                     Message Activity
                                 </div>
                                 <div class="analytics-period">Last 7 days</div>
@@ -2504,8 +2323,8 @@
                                 </svg>
                             </div>
                             <div class="analytics-summary">
-                                <div class="dashboard-stat">8,742</div>
-                                <div class="dashboard-desc">Messages sent this week</div>
+                                <div class="stat-value" style="font-size: 1.75rem;">8,742</div>
+                                <div class="stat-desc">Messages sent this week</div>
                             </div>
                         </div>
                     </div>
@@ -2514,7 +2333,7 @@
                         <div class="analytics-card">
                             <div class="analytics-header">
                                 <div class="analytics-title">
-                                    <i class="fas fa-shield-alt text-purple-400"></i>
+                                    <i class="fas fa-shield-alt"></i>
                                     Security Events
                                 </div>
                                 <div class="analytics-period">Last 30 days</div>
@@ -2522,20 +2341,20 @@
                             <div class="analytics-content">
                                 <div class="security-features" style="grid-template-columns: repeat(2, 1fr);">
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">42</div>
-                                        <div class="dashboard-desc">Spam Messages</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">42</div>
+                                        <div class="stat-desc">Spam Messages</div>
                                     </div>
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">18</div>
-                                        <div class="dashboard-desc">Raid Attempts</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">18</div>
+                                        <div class="stat-desc">Raid Attempts</div>
                                     </div>
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">7</div>
-                                        <div class="dashboard-desc">Scam Links</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">7</div>
+                                        <div class="stat-desc">Scam Links</div>
                                     </div>
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">23</div>
-                                        <div class="dashboard-desc">Filtered Content</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">23</div>
+                                        <div class="stat-desc">Filtered Content</div>
                                     </div>
                                 </div>
                             </div>
@@ -2544,7 +2363,7 @@
                         <div class="analytics-card">
                             <div class="analytics-header">
                                 <div class="analytics-title">
-                                    <i class="fas fa-user-shield text-purple-400"></i>
+                                    <i class="fas fa-user-shield"></i>
                                     Moderation Actions
                                 </div>
                                 <div class="analytics-period">Last 30 days</div>
@@ -2552,20 +2371,20 @@
                             <div class="analytics-content">
                                 <div class="security-features" style="grid-template-columns: repeat(2, 1fr);">
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">15</div>
-                                        <div class="dashboard-desc">Warnings</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">15</div>
+                                        <div class="stat-desc">Warnings</div>
                                     </div>
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">8</div>
-                                        <div class="dashboard-desc">Mutes</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">8</div>
+                                        <div class="stat-desc">Mutes</div>
                                     </div>
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">5</div>
-                                        <div class="dashboard-desc">Kicks</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">5</div>
+                                        <div class="stat-desc">Kicks</div>
                                     </div>
                                     <div style="text-align: center; padding: 1rem;">
-                                        <div class="dashboard-stat">3</div>
-                                        <div class="dashboard-desc">Bans</div>
+                                        <div class="stat-value" style="font-size: 1.75rem;">3</div>
+                                        <div class="stat-desc">Bans</div>
                                     </div>
                                 </div>
                             </div>
@@ -2580,28 +2399,42 @@
                             </div>
                         </div>
                         <div class="card-content">
-                            <div class="help-card" style="margin-bottom: 0;">
-                                <div class="help-content">
-                                    <div>
-                                        <h2 class="help-title">
-                                            <i class="fas fa-crown text-yellow-400"></i>
-                                            Unlock Advanced Analytics
-                                        </h2>
-                                        <p class="help-desc">
-                                            Get detailed insights into your server's activity with premium analytics features.
-                                        </p>
-                                        <ul class="feature-list" style="margin-top: 0.5rem;">
-                                            <li class="feature-item">Channel activity breakdown</li>
-                                            <li class="feature-item">User engagement metrics</li>
-                                            <li class="feature-item">Custom reports and exports</li>
-                                            <li class="feature-item">Real-time activity monitoring</li>
-                                        </ul>
-                                    </div>
-                                    <div class="help-actions">
-                                        <a href="https://sites.google.com/view/cloud-llc/our-products" target="_blank" class="btn btn-primary">
-                                            <i class="fas fa-crown"></i>
-                                            Upgrade to Premium
-                                        </a>
+                            <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(99, 102, 241, 0.2)); border-radius: var(--radius-lg); padding: 1.5rem; position: relative; overflow: hidden; margin-bottom: 0;">
+                                <div style="position: relative; z-index: 1;">
+                                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                        <div>
+                                            <h2 style="font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                                                <i class="fas fa-crown" style="color: gold;"></i>
+                                                Unlock Advanced Analytics
+                                            </h2>
+                                            <p style="color: var(--text-secondary); margin-top: 0.5rem;">
+                                                Get detailed insights into your server's activity with premium analytics features.
+                                            </p>
+                                            <ul style="list-style-type: none; margin-top: 1rem;">
+                                                <li style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <i class="fas fa-check-circle" style="color: var(--accent-purple);"></i>
+                                                    <span>Channel activity breakdown</span>
+                                                </li>
+                                                <li style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <i class="fas fa-check-circle" style="color: var(--accent-purple);"></i>
+                                                    <span>User engagement metrics</span>
+                                                </li>
+                                                <li style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                                    <i class="fas fa-check-circle" style="color: var(--accent-purple);"></i>
+                                                    <span>Custom reports and exports</span>
+                                                </li>
+                                                <li style="display: flex; align-items: center; gap: 0.5rem;">
+                                                    <i class="fas fa-check-circle" style="color: var(--accent-purple);"></i>
+                                                    <span>Real-time activity monitoring</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div style="display: flex; justify-content: flex-end;">
+                                            <a href="https://sites.google.com/view/cloud-llc/our-products" target="_blank" class="btn btn-primary">
+                                                <i class="fas fa-crown"></i>
+                                                Upgrade to Premium
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2610,15 +2443,15 @@
                 </div>
 
                 <!-- Settings Page -->
-                <div class="page" id="settings-page">
-                    <div>
+                <div class="page" id="settings-page" style="display: none;">
+                    <div class="page-header">
                         <h1 class="page-title">Bot Settings</h1>
                         <p class="page-subtitle">Configure Cloud Security for your server</p>
                     </div>
 
                     <div class="settings-section">
                         <h2 class="settings-title">
-                            <i class="fas fa-cog text-purple-400"></i>
+                            <i class="fas fa-cog"></i>
                             General Settings
                         </h2>
                         <div class="settings-grid">
@@ -2628,7 +2461,7 @@
                                     <div class="setting-desc">The prefix used for text commands (slash commands always work)</div>
                                 </div>
                                 <div class="setting-control">
-                                    <input type="text" value="!" class="channel-select" style="width: 60px;">
+                                    <input type="text" value="!" class="channel-select" style="width: 60px;" id="botPrefix">
                                 </div>
                             </div>
                             
@@ -2638,7 +2471,7 @@
                                     <div class="setting-desc">Time in seconds between command usage</div>
                                 </div>
                                 <div class="setting-control">
-                                    <input type="number" value="3" min="1" max="30" class="channel-select" style="width: 60px;">
+                                    <input type="number" value="3" min="1" max="30" class="channel-select" style="width: 60px;" id="commandCooldown">
                                 </div>
                             </div>
                             
@@ -2649,7 +2482,7 @@
                                 </div>
                                 <div class="setting-control">
                                     <label class="toggle-switch">
-                                        <input type="checkbox" checked>
+                                        <input type="checkbox" checked id="deleteCommandMessages">
                                         <span class="toggle-slider"></span>
                                     </label>
                                 </div>
@@ -2661,7 +2494,7 @@
                                     <div class="setting-desc">How the bot responds to commands</div>
                                 </div>
                                 <div class="setting-control">
-                                    <select class="channel-select">
+                                    <select class="channel-select" id="responseMethod">
                                         <option value="public" selected>Public</option>
                                         <option value="ephemeral">Ephemeral</option>
                                         <option value="dm">Direct Message</option>
@@ -2673,7 +2506,7 @@
 
                     <div class="settings-section">
                         <h2 class="settings-title">
-                            <i class="fas fa-file-alt text-purple-400"></i>
+                            <i class="fas fa-file-alt"></i>
                             Logging Configuration
                         </h2>
                         <div class="settings-grid">
@@ -2683,7 +2516,7 @@
                                     <div class="setting-desc">Channel for moderation action logs</div>
                                 </div>
                                 <div class="setting-control">
-                                    <select class="channel-select">
+                                    <select class="channel-select" id="moderationLogsChannel">
                                         <option value="none">Select Channel</option>
                                         <option value="mod-logs" selected>#mod-logs</option>
                                         <option value="bot-logs">#bot-logs</option>
@@ -2698,7 +2531,7 @@
                                     <div class="setting-desc">Channel for server event logs</div>
                                 </div>
                                 <div class="setting-control">
-                                    <select class="channel-select">
+                                    <select class="channel-select" id="serverLogsChannel">
                                         <option value="none">Select Channel</option>
                                         <option value="server-logs" selected>#server-logs</option>
                                         <option value="bot-logs">#bot-logs</option>
@@ -2713,7 +2546,7 @@
                                     <div class="setting-desc">Channel for message deletion/edit logs</div>
                                 </div>
                                 <div class="setting-control">
-                                    <select class="channel-select">
+                                    <select class="channel-select" id="messageLogsChannel">
                                         <option value="none">Select Channel</option>
                                         <option value="message-logs" selected>#message-logs</option>
                                         <option value="bot-logs">#bot-logs</option>
@@ -2728,7 +2561,7 @@
                                     <div class="setting-desc">Channel for voice activity logs</div>
                                 </div>
                                 <div class="setting-control">
-                                    <select class="channel-select">
+                                    <select class="channel-select" id="voiceLogsChannel">
                                         <option value="none">Select Channel</option>
                                         <option value="voice-logs">#voice-logs</option>
                                         <option value="bot-logs" selected>#bot-logs</option>
@@ -2741,7 +2574,7 @@
 
                     <div class="settings-section">
                         <h2 class="settings-title">
-                            <i class="fas fa-bullhorn text-purple-400"></i>
+                            <i class="fas fa-bullhorn"></i>
                             Welcome & Leave Messages
                         </h2>
                         <div class="settings-grid">
@@ -2751,7 +2584,7 @@
                                     <div class="setting-desc">Channel for welcome messages</div>
                                 </div>
                                 <div class="setting-control">
-                                    <select class="channel-select">
+                                    <select class="channel-select" id="welcomeChannel">
                                         <option value="none">Select Channel</option>
                                         <option value="welcome" selected>#welcome</option>
                                         <option value="general">#general</option>
@@ -2766,7 +2599,7 @@
                                     <div class="setting-desc">Channel for leave messages</div>
                                 </div>
                                 <div class="setting-control">
-                                    <select class="channel-select">
+                                    <select class="channel-select" id="leaveChannel">
                                         <option value="none">Select Channel</option>
                                         <option value="welcome" selected>#welcome</option>
                                         <option value="general">#general</option>
@@ -2781,7 +2614,7 @@
                                     <div class="setting-desc">Message sent when a new member joins</div>
                                 </div>
                                 <div class="setting-control" style="width: 100%; margin-top: 0.5rem;">
-                                    <textarea class="channel-select" style="width: 100%; height: 80px; resize: vertical;">Welcome {user} to {server}! You are member #{count}. Please read the rules and enjoy your stay!</textarea>
+                                    <textarea class="channel-select" style="width: 100%; height: 80px; resize: vertical;" id="welcomeMessage">Welcome {user} to {server}! You are member #{count}. Please read the rules and enjoy your stay!</textarea>
                                 </div>
                             </div>
                             
@@ -2791,7 +2624,7 @@
                                     <div class="setting-desc">Message sent when a member leaves</div>
                                 </div>
                                 <div class="setting-control" style="width: 100%; margin-top: 0.5rem;">
-                                    <textarea class="channel-select" style="width: 100%; height: 80px; resize: vertical;">{user} has left the server. We hope to see you again soon!</textarea>
+                                    <textarea class="channel-select" style="width: 100%; height: 80px; resize: vertical;" id="leaveMessage">{user} has left the server. We hope to see you again soon!</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2810,7 +2643,10 @@
     <script>
         // Create background particles
         function createParticles() {
-            const particlesContainer = document.getElementById('particles');
+            const particlesContainer = document.createElement('div');
+            particlesContainer.className = 'particles-container';
+            document.body.appendChild(particlesContainer);
+            
             const particleCount = 50;
             
             for (let i = 0; i < particleCount; i++) {
@@ -2905,6 +2741,9 @@
                     showNotification('info', 'Welcome to Cloud Security', 'Your dashboard is ready. Explore the features to secure your Discord server.');
                 }, 1000);
             }, 1500);
+            
+            // Generate moderation chart
+            generateModerationChart();
         });
 
         // Toggle sidebar on mobile
@@ -2915,115 +2754,96 @@
             sidebar.classList.toggle('open');
         });
         
-        // Toggle dropdown
-        const serverDropdown = document.getElementById('serverDropdown');
-        const dropdownContent = document.getElementById('dropdownContent');
-        
-        serverDropdown.addEventListener('click', () => {
-            dropdownContent.classList.toggle('show');
-        });
-        
-        // Close dropdown when clicking outside
-        window.addEventListener('click', (event) => {
-            if (!event.target.matches('.server-dropdown') && !event.target.closest('.server-dropdown')) {
-                if (dropdownContent.classList.contains('show')) {
-                    dropdownContent.classList.remove('show');
-                }
-            }
-        });
-        
-        // Toggle theme
+        // Theme toggle
         const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        let currentTheme = 'dark';
+        let isDarkTheme = true;
         
         themeToggle.addEventListener('click', () => {
-            if (currentTheme === 'dark') {
-                body.classList.remove('dark');
-                body.classList.add('light');
+            if (isDarkTheme) {
+                document.body.classList.add('light-theme');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                currentTheme = 'light';
+                isDarkTheme = false;
                 showNotification('info', 'Theme Changed', 'Light mode activated.');
             } else {
-                body.classList.remove('light');
-                body.classList.add('dark');
+                document.body.classList.remove('light-theme');
                 themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                currentTheme = 'dark';
+                isDarkTheme = true;
                 showNotification('info', 'Theme Changed', 'Dark mode activated.');
             }
         });
         
-        // Tab switching
-        const tabTriggers = document.querySelectorAll('.tab-trigger');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const tabIndicator = document.getElementById('tabIndicator');
+        // Server selector
+        const serverSelector = document.getElementById('serverSelector');
+        const serverModal = document.getElementById('serverModal');
+        const closeServerModal = document.getElementById('closeServerModal');
+        const cancelServerSelection = document.getElementById('cancelServerSelection');
+        const confirmServerSelection = document.getElementById('confirmServerSelection');
+        const serverItems = document.querySelectorAll('.server-dropdown-item');
         
-        function updateTabIndicator(trigger) {
-            if (tabIndicator) {
-                tabIndicator.style.left = trigger.offsetLeft + 'px';
-                tabIndicator.style.width = trigger.offsetWidth + 'px';
+        serverSelector.addEventListener('click', () => {
+            serverModal.classList.add('show');
+        });
+        
+        closeServerModal.addEventListener('click', () => {
+            serverModal.classList.remove('show');
+        });
+        
+        cancelServerSelection.addEventListener('click', () => {
+            serverModal.classList.remove('show');
+        });
+        
+        confirmServerSelection.addEventListener('click', () => {
+            const selectedServer = document.querySelector('.server-dropdown-item.active');
+            if (selectedServer) {
+                const serverName = selectedServer.querySelector('span').textContent;
+                const serverIcon = selectedServer.querySelector('i').className;
+                
+                document.querySelector('.server-name').textContent = serverName;
+                document.querySelector('.server-avatar i').className = serverIcon;
+                
+                showNotification('success', 'Server Changed', `Now managing ${serverName}`);
             }
-        }
+            serverModal.classList.remove('show');
+        });
         
-        tabTriggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                // Remove active class from all triggers and contents
-                tabTriggers.forEach(t => t.classList.remove('active'));
-                tabContents.forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked trigger and corresponding content
-                trigger.classList.add('active');
-                const tabId = trigger.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-                
-                // Update tab indicator position
-                updateTabIndicator(trigger);
+        serverItems.forEach(item => {
+            item.addEventListener('click', () => {
+                serverItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
             });
         });
         
-        // Initialize tab indicator position
-        if (tabIndicator) {
-            const activeTrigger = document.querySelector('.tab-trigger.active');
-            if (activeTrigger) {
-                updateTabIndicator(activeTrigger);
+        // Navigation items
+        const navItems = document.querySelectorAll('.nav-item[data-page]');
+        const pages = document.querySelectorAll('.page');
+        
+        function switchPage(pageId) {
+            // Remove active class from all nav items and pages
+            navItems.forEach(item => item.classList.remove('active'));
+            pages.forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // Add active class to clicked nav item and corresponding page
+            document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
+            document.getElementById(`${pageId}-page`).style.display = 'block';
+            
+            // Update header title
+            document.querySelector('.header-title').textContent = pageId.charAt(0).toUpperCase() + pageId.slice(1);
+            
+            // Close sidebar on mobile after navigation
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
             }
         }
         
-        // Command tab switching
-        const cmdTabTriggers = document.querySelectorAll('[data-cmd-tab]');
-        const cmdTabContents = document.querySelectorAll('[id$="-tab"]');
-        const cmdTabIndicator = document.getElementById('cmdTabIndicator');
-        
-        function updateCmdTabIndicator(trigger) {
-            if (cmdTabIndicator) {
-                cmdTabIndicator.style.left = trigger.offsetLeft + 'px';
-                cmdTabIndicator.style.width = trigger.offsetWidth + 'px';
-            }
-        }
-        
-        cmdTabTriggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                // Remove active class from all triggers and contents
-                cmdTabTriggers.forEach(t => t.classList.remove('active'));
-                cmdTabContents.forEach(c => c.classList.remove('active'));
-                
-                // Add active class to clicked trigger and corresponding content
-                trigger.classList.add('active');
-                const tabId = trigger.getAttribute('data-cmd-tab') + '-tab';
-                document.getElementById(tabId).classList.add('active');
-                
-                // Update tab indicator position
-                updateCmdTabIndicator(trigger);
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = item.getAttribute('data-page');
+                switchPage(pageId);
             });
         });
-        
-        // Initialize command tab indicator position
-        if (cmdTabIndicator) {
-            const activeCmdTrigger = document.querySelector('[data-cmd-tab].active');
-            if (activeCmdTrigger) {
-                updateCmdTabIndicator(activeCmdTrigger);
-            }
-        }
         
         // View Commands button functionality
         const viewCommandsBtn = document.getElementById('viewCommandsBtn');
@@ -3032,7 +2852,7 @@
             viewCommandsBtn.addEventListener('click', () => {
                 // Switch to commands page
                 switchPage('commands');
-                showNotification('success', 'Page Changed', 'Viewing Commands page');
+                showNotification('info', 'Page Changed', 'Viewing Commands page');
             });
         }
         
@@ -3043,7 +2863,7 @@
             viewSecurityBtn.addEventListener('click', () => {
                 // Switch to security page
                 switchPage('security');
-                showNotification('success', 'Page Changed', 'Viewing Security page');
+                showNotification('info', 'Page Changed', 'Viewing Security page');
             });
         }
         
@@ -3054,7 +2874,103 @@
             viewAnalyticsBtn.addEventListener('click', () => {
                 // Switch to analytics page
                 switchPage('analytics');
-                showNotification('success', 'Page Changed', 'Viewing Analytics page');
+                showNotification('info', 'Page Changed', 'Viewing Analytics page');
+            });
+        }
+        
+        // Quick Settings button functionality
+        const quickSettingsBtn = document.getElementById('quickSettingsBtn');
+        
+        if (quickSettingsBtn) {
+            quickSettingsBtn.addEventListener('click', () => {
+                // Switch to settings page
+                switchPage('settings');
+                showNotification('info', 'Page Changed', 'Viewing Settings page');
+            });
+        }
+        
+        // Command tabs
+        const commandTabs = document.querySelectorAll('.commands-tab');
+        
+        commandTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                commandTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Filter commands based on tab
+                const category = tab.getAttribute('data-tab');
+                filterCommands(category);
+            });
+        });
+        
+        function filterCommands(category) {
+            const commandGroups = document.querySelectorAll('.commands-group');
+            
+            if (category === 'all') {
+                commandGroups.forEach(group => {
+                    group.style.display = 'block';
+                });
+                return;
+            }
+            
+            commandGroups.forEach(group => {
+                const groupTitle = group.querySelector('.commands-group-title').textContent.toLowerCase();
+                
+                if (groupTitle.includes(category)) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        }
+        
+        // Command search functionality
+        const commandSearch = document.getElementById('commandSearch');
+        
+        if (commandSearch) {
+            commandSearch.addEventListener('input', () => {
+                const searchTerm = commandSearch.value.toLowerCase();
+                
+                if (searchTerm.length < 1) {
+                    // Reset view
+                    const activeTab = document.querySelector('.commands-tab.active');
+                    if (activeTab) {
+                        filterCommands(activeTab.getAttribute('data-tab'));
+                    } else {
+                        filterCommands('all');
+                    }
+                    return;
+                }
+                
+                // Show all groups for searching
+                const commandGroups = document.querySelectorAll('.commands-group');
+                commandGroups.forEach(group => {
+                    group.style.display = 'block';
+                });
+                
+                // Filter commands based on search term
+                const commandItems = document.querySelectorAll('.command-item');
+                commandItems.forEach(item => {
+                    const commandName = item.querySelector('.command-name').textContent.toLowerCase();
+                    const commandDesc = item.querySelector('.command-desc').textContent.toLowerCase();
+                    
+                    if (commandName.includes(searchTerm) || commandDesc.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Hide empty groups
+                commandGroups.forEach(group => {
+                    const visibleItems = Array.from(group.querySelectorAll('.command-item')).filter(item => item.style.display !== 'none');
+                    if (visibleItems.length === 0) {
+                        group.style.display = 'none';
+                    }
+                });
             });
         }
         
@@ -3072,6 +2988,26 @@
                 // Show notification
                 const levelName = level.querySelector('.security-title').textContent;
                 showNotification('info', 'Security Level Changed', `Security level set to ${levelName}. Click Save to apply changes.`);
+            });
+        });
+        
+        // Security feature toggles
+        const featureToggles = document.querySelectorAll('.feature-toggle');
+        
+        featureToggles.forEach(toggle => {
+            toggle.addEventListener('change', () => {
+                const statusElement = toggle.parentElement.previousElementSibling;
+                const featureName = toggle.closest('.feature-card').querySelector('.feature-title').textContent;
+                
+                if (toggle.checked) {
+                    statusElement.textContent = 'Enabled';
+                    statusElement.className = 'text-green-400';
+                    showNotification('success', 'Feature Enabled', `${featureName} has been enabled.`);
+                } else {
+                    statusElement.textContent = 'Disabled';
+                    statusElement.className = 'text-red-400';
+                    showNotification('warning', 'Feature Disabled', `${featureName} has been disabled.`);
+                }
             });
         });
         
@@ -3101,32 +3037,80 @@
             });
         });
         
-        // Navigation items
-        const navItems = document.querySelectorAll('.nav-item[data-page]');
-        const pages = document.querySelectorAll('.page');
+        // Quick action buttons
+        const scanServerBtn = document.getElementById('scanServerBtn');
+        const verifyUsersBtn = document.getElementById('verifyUsersBtn');
+        const lockdownBtn = document.getElementById('lockdownBtn');
         
-        function switchPage(pageId) {
-            // Remove active class from all nav items and pages
-            navItems.forEach(item => item.classList.remove('active'));
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // Add active class to clicked nav item and corresponding page
-            document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
-            document.getElementById(`${pageId}-page`).classList.add('active');
-            
-            // Close sidebar on mobile after navigation
-            if (window.innerWidth <= 768) {
-                sidebar.classList.remove('open');
-            }
+        if (scanServerBtn) {
+            scanServerBtn.addEventListener('click', () => {
+                scanServerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning...';
+                scanServerBtn.disabled = true;
+                
+                setTimeout(() => {
+                    scanServerBtn.innerHTML = '<i class="fas fa-shield-alt"></i> Security Scan';
+                    scanServerBtn.disabled = false;
+                    showNotification('success', 'Scan Complete', 'Server security scan completed. No issues found.');
+                }, 2000);
+            });
         }
         
-        navItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = item.getAttribute('data-page');
-                switchPage(pageId);
+        if (verifyUsersBtn) {
+            verifyUsersBtn.addEventListener('click', () => {
+                verifyUsersBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+                verifyUsersBtn.disabled = true;
+                
+                setTimeout(() => {
+                    verifyUsersBtn.innerHTML = '<i class="fas fa-user-shield"></i> Verify Users';
+                    verifyUsersBtn.disabled = false;
+                    showNotification('success', 'Users Verified', 'All users have been verified successfully.');
+                }, 2000);
             });
-        });
+        }
+        
+        if (lockdownBtn) {
+            let isLocked = false;
+            
+            lockdownBtn.addEventListener('click', () => {
+                if (!isLocked) {
+                    lockdownBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Locking...';
+                    lockdownBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        lockdownBtn.innerHTML = '<i class="fas fa-unlock"></i> Unlock';
+                        lockdownBtn.disabled = false;
+                        isLocked = true;
+                        showNotification('warning', 'Server Locked', 'Server is now in lockdown mode. Only admins can send messages.');
+                    }, 2000);
+                } else {
+                    lockdownBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Unlocking...';
+                    lockdownBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        lockdownBtn.innerHTML = '<i class="fas fa-lock"></i> Lockdown';
+                        lockdownBtn.disabled = false;
+                        isLocked = false;
+                        showNotification('success', 'Server Unlocked', 'Lockdown mode has been disabled. Normal operations resumed.');
+                    }, 2000);
+                }
+            });
+        }
+        
+        // Chart buttons
+        const filterChartBtn = document.getElementById('filterChartBtn');
+        const exportChartBtn = document.getElementById('exportChartBtn');
+        
+        if (filterChartBtn) {
+            filterChartBtn.addEventListener('click', () => {
+                showNotification('info', 'Filter Applied', 'Chart filtered to show data from the last 7 days.');
+            });
+        }
+        
+        if (exportChartBtn) {
+            exportChartBtn.addEventListener('click', () => {
+                showNotification('success', 'Chart Exported', 'Chart data has been exported to CSV format.');
+            });
+        }
         
         // Generate moderation chart
         function generateModerationChart() {
@@ -3179,90 +3163,6 @@
                 });
             }, 500);
         }
-        
-        // Generate chart on page load
-        window.addEventListener('load', generateModerationChart);
-        
-        // Command search functionality
-        const commandSearch = document.getElementById('commandSearch');
-        const searchResults = document.getElementById('searchResults');
-        
-        if (commandSearch) {
-            commandSearch.addEventListener('input', () => {
-                const searchTerm = commandSearch.value.toLowerCase();
-                
-                if (searchTerm.length < 1) {
-                    searchResults.innerHTML = '<p class="text-center text-purple-300/70">Type to search for commands</p>';
-                    return;
-                }
-                
-                // Sample commands for search
-                const commands = [
-                    { name: '/help', desc: 'Displays help information for all commands or a specific command.' },
-                    { name: '/ban', desc: 'Bans a user from the server with an optional reason.' },
-                    { name: '/kick', desc: 'Kicks a user from the server with an optional reason.' },
-                    { name: '/mute', desc: 'Temporarily mutes a user for the specified duration.' },
-                    { name: '/warn', desc: 'Issues a warning to a user with the specified reason.' },
-                    { name: '/clear', desc: 'Deletes the specified number of messages from the current channel.' },
-                    { name: '/security', desc: 'Sets the security level for your server (low, medium, high, extreme).' },
-                    { name: '/antiraid', desc: 'Enables or disables anti-raid protection for your server.' },
-                    { name: '/antispam', desc: 'Enables or disables anti-spam protection for your server.' },
-                    { name: '/verification', desc: 'Sets the verification level required for new members.' },
-                    { name: '/stats', desc: 'Shows statistics about your server and Cloud Security\'s activity.' },
-                    { name: '/ticket', desc: 'Creates or closes a support ticket.' },
-                    { name: '/userinfo', desc: 'Displays information about a user.' },
-                    { name: '/setup', desc: 'Starts the interactive setup process for configuring Cloud Security.' },
-                    { name: '/logs', desc: 'Sets the channel where Cloud Security will send log messages.' },
-                    { name: '/welcome', desc: 'Sets up welcome messages for new members.' },
-                    { name: '/autorole', desc: 'Sets a role to be automatically assigned to new members.' }
-                ];
-                
-                // Filter commands based on search term
-                const filteredCommands = commands.filter(cmd => 
-                    cmd.name.toLowerCase().includes(searchTerm) || 
-                    cmd.desc.toLowerCase().includes(searchTerm)
-                );
-                
-                // Display results
-                if (filteredCommands.length > 0) {
-                    searchResults.innerHTML = '';
-                    filteredCommands.forEach(cmd => {
-                        const cmdCard = document.createElement('div');
-                        cmdCard.className = 'command-card';
-                        cmdCard.innerHTML = `
-                            <div class="command-name">
-                                <i class="fas fa-terminal text-purple-400"></i>
-                                <code>${cmd.name}</code>
-                            </div>
-                            <p class="command-desc">
-                                ${cmd.desc}
-                            </p>
-                        `;
-                        searchResults.appendChild(cmdCard);
-                    });
-                } else {
-                    searchResults.innerHTML = '<p class="text-center text-purple-300/70">No commands found matching your search</p>';
-                }
-            });
-        }
-        
-        // Toggle switches animation
-        const toggleSwitches = document.querySelectorAll('.toggle-switch input');
-        
-        toggleSwitches.forEach(toggle => {
-            toggle.addEventListener('change', () => {
-                const label = toggle.parentElement.previousElementSibling;
-                if (toggle.checked) {
-                    label.textContent = 'Enabled';
-                    label.className = 'text-green-400';
-                    showNotification('success', 'Feature Enabled', 'This feature has been enabled.');
-                } else {
-                    label.textContent = 'Disabled';
-                    label.className = 'text-red-400';
-                    showNotification('warning', 'Feature Disabled', 'This feature has been disabled.');
-                }
-            });
-        });
     </script>
 </body>
 </html>
